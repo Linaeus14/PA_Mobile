@@ -1,10 +1,10 @@
 part of './widget.dart';
 
 class ButtonSecondary extends StatelessWidget {
-  final void Function() _onPressed;
   final String _text;
   final double _width;
   final double _height;
+  final void Function() _onPressed;
   const ButtonSecondary(
       {super.key,
       required String text,
@@ -24,8 +24,8 @@ class ButtonSecondary extends StatelessWidget {
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
             elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
             side: BorderSide(width: 1.5, color: scheme.primary),
             minimumSize: Size(8 * _width / 10, _height / 10), //////// HERE
           ),

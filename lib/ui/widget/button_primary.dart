@@ -1,10 +1,10 @@
 part of './widget.dart';
 
 class ButtonPrimary extends StatelessWidget {
-  final void Function() _onPressed;
   final String _text;
   final double _width;
   final double _height;
+  final void Function() _onPressed;
   const ButtonPrimary(
       {super.key,
       required String text,
