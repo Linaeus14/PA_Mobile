@@ -22,11 +22,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          child: ButtonSecondary(
-              text: "Sign Up",
-              mediaQueryWidth: width,
-              mediaQueryHeight: height,
-              onPressed: () {}),
+          child: const SearchField(),
         ),
       ),
     );
