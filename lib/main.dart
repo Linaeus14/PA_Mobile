@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Plantdex',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF338249)),
         useMaterial3: true,
       ),
       home: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          child: ButtonPrimary(
-              text: "Sign In",
+          child: ButtonSecondary(
+              text: "Sign Up",
               mediaQueryWidth: width,
               mediaQueryHeight: height,
               onPressed: () {}),

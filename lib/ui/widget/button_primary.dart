@@ -18,11 +18,12 @@ class ButtonPrimary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF338249),
-          foregroundColor: Colors.white,
-          shadowColor: Colors.greenAccent,
+          backgroundColor: scheme.primary,
+          foregroundColor: scheme.onPrimary,
+          shadowColor: scheme.surfaceVariant,
           elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
