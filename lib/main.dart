@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          child: const SearchField(),
+          child: PlantList(mediaQueryWidth: width, mediaQueryHeight: height),
         ),
       ),
     );
