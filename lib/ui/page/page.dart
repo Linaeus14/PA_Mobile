@@ -6,3 +6,4 @@ import 'package:provider/provider.dart';
 
 part './main_page.dart';
 part './main_home_page.dart';
+part './main_favorite_pagre.dart';

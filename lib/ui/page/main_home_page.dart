@@ -74,7 +74,7 @@ class HomePage extends StatelessWidget {
               const Text("Plants"),
               Container(
                 width: _width,
-                height: _height / 2 - 10,
+                height: _height / 2 - 4,
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                     itemCount: 10,

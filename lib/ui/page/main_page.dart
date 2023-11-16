@@ -23,7 +23,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> navBody = [
-      HomePage(mediaQueryWidth: _width, mediaQueryHeight: _height),
+      FavoritePage(mediaQueryWidth: _width, mediaQueryHeight: _height),
       HomePage(mediaQueryWidth: _width, mediaQueryHeight: _height),
       HomePage(mediaQueryWidth: _width, mediaQueryHeight: _height)
     ];
