@@ -13,7 +13,6 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PlantData plantData = Provider.of<PlantData>(context);
-    ColorScheme scheme = Theme.of(context).colorScheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,7 +25,7 @@ class FavoritePage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             width: _width,
-            height: _height -218,
+            height: _height - 218,
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
                 itemCount: 10,

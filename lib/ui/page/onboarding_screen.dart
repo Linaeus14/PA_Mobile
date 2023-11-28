@@ -1,7 +1,14 @@
 part of './page.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  final double _width;
+  final double _height;
+  const OnboardingScreen(
+      {super.key,
+      required double mediaQueryWidth,
+      required double mediaQueryHeight})
+      : _width = mediaQueryWidth,
+        _height = mediaQueryHeight;
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -24,8 +31,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: InkWell(
               onTap: () {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => const SignIn()));
-              }, 
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainPage(
+                              mediaQueryWidth: widget._width,
+                              mediaQueryHeight: widget._height,
+                            )));
+              },
               child: const Text(
                 'Skip',
                 style: TextStyle(
@@ -49,20 +61,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
             controller: _pageController,
             children: const [
-              createPage(
-                image: 'assets/plantdex1.png',
+              CreatePage(
+                image: 'plantdex1.png',
                 title: "Learn more about plants",
-                description: "Read how to care for plants in our rich plants guide.",
+                description:
+                    "Read how to care for plants in our rich plants guide.",
               ),
-              createPage(
-                image: 'assets/plantdex2.png',
+              CreatePage(
+                image: 'plantdex2.png',
                 title: "Find a plant lover friend",
-                description: "Are you a plant lover? Connect with other plant lovers.",
+                description:
+                    "Are you a plant lover? Connect with other plant lovers.",
               ),
-              createPage(
-                image: 'assets/plantdex3.png',
+              CreatePage(
+                image: 'plantdex3.png',
                 title: "Plant a tree, green the Earth",
-                description: "Find almost all types of plants that you like here.",
+                description:
+                    "Find almost all types of plants that you like here.",
               ),
             ],
           ),
@@ -77,6 +92,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             bottom: 60,
             right: 30,
             child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff296e48),
+              ),
               child: IconButton(
                   onPressed: () {
                     setState(() {
@@ -88,8 +108,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               curve: Curves.easeIn);
                         }
                       } else {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => const SignIn()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MainPage(
+                                      mediaQueryWidth: widget._width,
+                                      mediaQueryHeight: widget._height,
+                                    )));
                       }
                     });
                   },
@@ -98,11 +123,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     size: 24,
                     color: Colors.white,
                   )),
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xff296e48),
-              ),
             ),
           ),
         ],
@@ -123,7 +143,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-
   List<Widget> _buildIndicator() {
     List<Widget> indicators = [];
 
@@ -139,12 +158,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-class createPage extends StatelessWidget {
+class CreatePage extends StatelessWidget {
   final String image;
   final String title;
   final String description;
 
-  const createPage({
+  const CreatePage({
     Key? key,
     required this.image,
     required this.title,
@@ -169,7 +188,7 @@ class createPage extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color:Color(0xff296e48),
+              color: Color(0xff296e48),
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

@@ -10,7 +10,7 @@ class ButtonSecondary extends StatelessWidget {
       required String text,
       required double mediaQueryWidth,
       required double mediaQueryHeight,
-      required void Function() onPressed})
+      required onPressed})
       : _onPressed = onPressed,
         _text = text,
         _width = mediaQueryWidth,

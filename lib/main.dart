@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
                   ColorScheme.fromSeed(seedColor: const Color(0xFF338249)),
               useMaterial3: true,
             ),
-            home: MainPage(mediaQueryWidth: width, mediaQueryHeight: height));
+            home: OnboardingScreen(
+                mediaQueryWidth: width, mediaQueryHeight: height));
       }),
     );
   }

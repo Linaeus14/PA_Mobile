@@ -9,14 +9,14 @@ class SignIn extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 180,
                 height: 175,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration( 
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -24,8 +24,8 @@ class SignIn extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 26),
-                child: Text(
+                margin: const EdgeInsets.only(top: 26),
+                child: const Text(
                   'Welcome Back,',
                   style: TextStyle(
                     fontFamily: 'Raleway',
@@ -36,8 +36,8 @@ class SignIn extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 12),
-                child: Text(
+                margin: const EdgeInsets.only(top: 12),
+                child: const Text(
                   'Access Plant Identifier features with your login',
                   style: TextStyle(
                     fontFamily: 'Raleway',
@@ -47,8 +47,8 @@ class SignIn extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 25),
-                child: TextField(
+                margin: const EdgeInsets.only(top: 25),
+                child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Email Address',
                     hintStyle: TextStyle(
@@ -63,8 +63,8 @@ class SignIn extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 15),
-                child: TextField(
+                margin: const EdgeInsets.only(top: 15),
+                child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: TextStyle(
@@ -80,7 +80,7 @@ class SignIn extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 200),
+                margin: const EdgeInsets.only(top: 200),
                 width: 350,
                 height: 50,
                 child: ElevatedButton(
@@ -88,12 +88,12 @@ class SignIn extends StatelessWidget {
                    
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF338249),
+                    backgroundColor: const Color(0xFF338249),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Sign In',
                     style: TextStyle(
                       fontSize: 16,
@@ -106,19 +106,19 @@ class SignIn extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 15, left: 90),
+                margin: const EdgeInsets.only(top: 15, left: 90),
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 14,
                       color: Colors.black,  
                     ),
                     children: [
-                      TextSpan(text: 'New to Plantdex? '),
+                      const TextSpan(text: 'New to Plantdex? '),
                       TextSpan(
                         text: 'Sign Up',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.green,  
                           decoration: TextDecoration.underline,
                         ),
@@ -126,7 +126,7 @@ class SignIn extends StatelessWidget {
                           ..onTap = () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SignUp()),
+                              MaterialPageRoute(builder: (context) => const SignUp()),
                             );
                           },
                       ),

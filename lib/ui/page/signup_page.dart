@@ -9,14 +9,14 @@ class SignUp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 180,
                 height: 175,
-                margin: EdgeInsets.only(top: 20),
+                margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -24,8 +24,8 @@ class SignUp extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 26),
-                child: Text(
+                margin: const EdgeInsets.only(top: 26),
+                child: const Text(
                   'Get on Board!',
                   style: TextStyle(
                     fontFamily: 'Raleway',
@@ -36,8 +36,8 @@ class SignUp extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 12),
-                child: Text(
+                margin: const EdgeInsets.only(top: 12),
+                child: const Text(
                   'Create a new account to access all our features',
                   style: TextStyle(
                     fontFamily: 'Raleway',
@@ -47,8 +47,8 @@ class SignUp extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 25),
-                child: TextField(
+                margin: const EdgeInsets.only(top: 25),
+                child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Full Name',
                     hintStyle: TextStyle(
@@ -62,8 +62,8 @@ class SignUp extends StatelessWidget {
               ),
               
               Container(
-                margin: EdgeInsets.only(top: 15),
-                child: TextField(
+                margin: const EdgeInsets.only(top: 15),
+                child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Email Address',
                     hintStyle: TextStyle(
@@ -78,8 +78,8 @@ class SignUp extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 15),
-                child: TextField(
+                margin: const EdgeInsets.only(top: 15),
+                child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: TextStyle(
@@ -94,7 +94,7 @@ class SignUp extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 130),
+                margin: const EdgeInsets.only(top: 130),
                 width: 350,
                 height: 50,
                 child: ElevatedButton(
@@ -102,12 +102,12 @@ class SignUp extends StatelessWidget {
                    
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF338249),
+                    backgroundColor: const Color(0xFF338249),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Sign Up',
                     style: TextStyle(
                       fontSize: 16,
@@ -119,19 +119,19 @@ class SignUp extends StatelessWidget {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 15, left: 90),
+                margin: const EdgeInsets.only(top: 15, left: 90),
                 child: RichText(
                   text: TextSpan(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 14,
                       color: Colors.black,  
                     ),
                     children: [
-                      TextSpan(text: 'Have an Account? '),
+                      const TextSpan(text: 'Have an Account? '),
                       TextSpan(
                         text: 'Sign In',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.green,  
                           decoration: TextDecoration.underline,
                         ),
@@ -139,7 +139,7 @@ class SignUp extends StatelessWidget {
                           ..onTap = () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SignIn()),
+                              MaterialPageRoute(builder: (context) => const SignIn()),
                             );
                           },
                       ),

@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 
 part './main_page.dart';
 part './main_home_page.dart';
-part './main_favorite_pagre.dart';
+part 'main_favorite_page.dart';
 part './onboarding_screen.dart';
 part './signin_page.dart';
 part './signup_page.dart';
