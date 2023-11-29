@@ -13,7 +13,11 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> navBody = [const FavoritePage(), const HomePage(), const HomePage()];
+    final List<Widget> navBody = [
+      const FavoritePage(),
+      const HomePage(),
+      const HomePage()
+    ];
     ColorScheme scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
@@ -28,6 +32,8 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: scheme.surfaceVariant,
         unselectedItemColor: scheme.onSurfaceVariant,
         selectedItemColor: scheme.primary,
+        selectedIconTheme: const IconThemeData(size: 25),
+        unselectedIconTheme: const IconThemeData(size: 20),
         currentIndex: navIndex,
         onTap: onItemTap,
         items: [

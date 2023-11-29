@@ -1,12 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pa_mobile/firebase_options.dart';
 import 'package:pa_mobile/provider/provider.dart';
 import 'package:pa_mobile/shared/shared.dart';
 import 'package:pa_mobile/ui/page/page.dart';
 import 'package:provider/provider.dart';
 import 'dart:collection';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -41,9 +47,11 @@ class MyApp extends StatelessWidget {
 class ThemeModeData {
   ThemeMode _themeMode = ThemeMode.system;
   final ColorScheme _colorSchemeDark = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF338249), brightness: Brightness.dark);
+      seedColor: const Color.fromARGB(255, 82, 218, 121),
+      brightness: Brightness.dark);
   final ColorScheme _colorSchemeLight = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF338249), brightness: Brightness.light);
+      seedColor: const Color.fromARGB(255, 82, 218, 121),
+      brightness: Brightness.light);
   final List<bool> _isSelected = [true, false, false];
   final TextTheme _appTextTheme = const TextTheme(
     displayLarge: TextStyle(
