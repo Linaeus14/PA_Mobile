@@ -6,7 +6,6 @@ import 'package:pa_mobile/provider/provider.dart';
 import 'package:pa_mobile/shared/shared.dart';
 import 'package:pa_mobile/ui/page/page.dart';
 import 'package:provider/provider.dart';
-import 'dart:collection';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,34 +23,38 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeModeData theme = ThemeModeData();
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => PlantData())],
-      child: Builder(builder: (context) {
-        return MaterialApp(
-            title: 'Plantdex',
-            debugShowCheckedModeBanner: false,
-            themeMode: theme._themeMode,
-            theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: theme.colorSchemeLight,
-                textTheme: theme.textTheme),
-            darkTheme: ThemeData(
-                useMaterial3: true,
-                colorScheme: theme.colorSchemeDark,
-                textTheme: theme.textTheme),
-            home: const LaunchApp());
-      }),
+      providers: [
+        ChangeNotifierProvider(create: (context) => PlantData()),
+        ChangeNotifierProvider(create: (context) => DarkMode())
+      ],
+      child: FutureBuilder(
+          future: Provider.of<DarkMode>(context).themeMode(),
+          builder: (context, snapshot) {
+            return MaterialApp(
+                title: 'Plantdex',
+                debugShowCheckedModeBanner: false,
+                themeMode: snapshot.data,
+                theme: ThemeData(
+                    useMaterial3: true,
+                    colorScheme: theme.colorSchemeLight,
+                    textTheme: theme.textTheme),
+                darkTheme: ThemeData(
+                    useMaterial3: true,
+                    colorScheme: theme.colorSchemeDark,
+                    textTheme: theme.textTheme),
+                home: const LaunchApp());
+          }),
     );
   }
 }
 
 class ThemeModeData {
-  ThemeMode _themeMode = ThemeMode.system;
   final ColorScheme _colorSchemeDark = ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 52, 189, 91), brightness: Brightness.dark);
+      seedColor: const Color.fromARGB(255, 52, 189, 91),
+      brightness: Brightness.dark);
   final ColorScheme _colorSchemeLight = ColorScheme.fromSeed(
       seedColor: const Color.fromARGB(255, 23, 156, 61),
       brightness: Brightness.light);
-  final List<bool> _isSelected = [true, false, false];
   final TextTheme _appTextTheme = const TextTheme(
     displayLarge: TextStyle(
         fontSize: 96,
@@ -138,32 +141,9 @@ class ThemeModeData {
         fontFamily: 'Roboto',
         color: Colors.grey),
   );
-
-  ThemeMode get themeMode => _themeMode;
   ColorScheme get colorSchemeDark => _colorSchemeDark;
   ColorScheme get colorSchemeLight => _colorSchemeLight;
   TextTheme get textTheme => _appTextTheme;
-  UnmodifiableListView<bool> get isSelected =>
-      UnmodifiableListView(_isSelected);
-
-  void _themeSelect(int index) {
-    _themeMode = index == 0
-        ? ThemeMode.system
-        : index == 1
-            ? ThemeMode.light
-            : ThemeMode.dark;
-  }
-
-  void onPressToogle(int newIndex) {
-    for (int index = 0; index < _isSelected.length; index++) {
-      if (index == newIndex) {
-        _isSelected[index] = true;
-        _themeSelect(index);
-      } else {
-        _isSelected[index] = false;
-      }
-    }
-  }
 }
 
 class LaunchApp extends StatelessWidget {

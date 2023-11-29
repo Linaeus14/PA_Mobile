@@ -1,42 +1,43 @@
 part of './widget.dart';
 
 class PlantTile extends StatelessWidget {
+  final PlantClass plant;
+  final bool isOn;
+  final VoidCallback onPressed;
+
   const PlantTile(
       {super.key,
-      required double width,
-      required double height,
-      required this.favorite,
-      required this.index,
-      required this.onPressed})
-      : _width = width,
-        _height = height;
-
-  final double _width;
-  final double _height;
-  final List<bool> favorite;
-  final int index;
-  final VoidCallback onPressed;
+      required this.plant,
+      required this.isOn,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Material(
       elevation: 5,
       shadowColor: Colors.black45,
       child: ListTile(
           contentPadding: const EdgeInsets.all(8.0),
           leading: Container(
-            width: 5 * _width / 20,
-            height: 2 * _height / 10,
-            alignment: Alignment.center,
-            child: const Icon(Icons.image_outlined),
+            width: width / 4,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                image: DecorationImage(
+                    image: plant.image == null
+                        ? const AssetImage("null_image.png")
+                            as ImageProvider<Object>
+                        : NetworkImage(
+                            "https://images.weserv.nl/?url=${plant.image}"),
+                    fit: plant.image == null ? BoxFit.fitHeight : BoxFit.cover)),
           ),
-          title: const Text("Title"),
-          subtitle: const Column(
+          title: Text(plant.nama!),
+          subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Category1, Category2"),
+              Text(plant.sNama!.join(", ")),
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                plant.cycle!,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               )
@@ -44,10 +45,8 @@ class PlantTile extends StatelessWidget {
           ),
           trailing: IconButton(
               icon: Icon(
-                favorite[index]
-                    ? CupertinoIcons.heart_fill
-                    : CupertinoIcons.heart_solid,
-                color: favorite[index] ? Colors.red : null,
+                isOn ? CupertinoIcons.heart_fill : CupertinoIcons.heart_solid,
+                color: isOn ? Colors.red : null,
               ),
               onPressed: () => onPressed)),
     );

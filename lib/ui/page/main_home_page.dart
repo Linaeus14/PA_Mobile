@@ -68,21 +68,10 @@ class HomePage extends StatelessWidget {
             children: [
               const Text("Plants"),
               Container(
-                width: width,
-                height: height / 2 - 4,
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, int index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: PlantTile(
-                          width: width,
-                          height: height,
-                          favorite: plantData.favorite,
-                          index: index,
-                          onPressed: () => plantData.toggle(index),
-                        ))),
-              )
+                  width: width,
+                  height: height / 2 - 4,
+                  padding: const EdgeInsets.all(8.0),
+                  child: const PlantList())
             ],
           ),
         )
