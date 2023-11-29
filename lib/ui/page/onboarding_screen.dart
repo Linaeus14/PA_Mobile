@@ -21,11 +21,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: scheme.background,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: scheme.background,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20, top: 20),
@@ -34,10 +35,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (_) => const MainPage()));
               },
-              child: const Text(
+              child: Text(
                 'Skip',
                 style: TextStyle(
-                  color: Colors.grey,
+                  color: scheme.onSurfaceVariant,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
                 ),
@@ -89,9 +90,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             right: 30,
             child: Container(
               padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xff296e48),
+                color: scheme.primary,
               ),
               child: IconButton(
                   onPressed: () {
@@ -104,15 +105,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               curve: Curves.easeIn);
                         }
                       } else {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => const MainPage()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const MainPage()));
                       }
                     });
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_forward_ios,
                     size: 24,
-                    color: Colors.white,
+                    color: scheme.background,
                   )),
             ),
           ),
@@ -122,13 +125,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget _indicator(bool isActive) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       height: 10.0,
       width: isActive ? 20 : 8,
       margin: const EdgeInsets.only(right: 5.0),
       decoration: BoxDecoration(
-        color: const Color(0xff296e48),
+        color: scheme.primary,
         borderRadius: BorderRadius.circular(5),
       ),
     );
@@ -163,6 +167,7 @@ class CreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 80),
       child: Column(
@@ -178,8 +183,8 @@ class CreatePage extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xff296e48),
+            style: TextStyle(
+              color: scheme.primary,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
@@ -190,10 +195,10 @@ class CreatePage extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,
-              color: Colors.grey,
+              color: scheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(

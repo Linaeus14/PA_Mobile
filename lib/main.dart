@@ -47,10 +47,9 @@ class MyApp extends StatelessWidget {
 class ThemeModeData {
   ThemeMode _themeMode = ThemeMode.system;
   final ColorScheme _colorSchemeDark = ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 82, 218, 121),
-      brightness: Brightness.dark);
+      seedColor: const Color.fromARGB(255, 52, 189, 91), brightness: Brightness.dark);
   final ColorScheme _colorSchemeLight = ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 82, 218, 121),
+      seedColor: const Color.fromARGB(255, 23, 156, 61),
       brightness: Brightness.light);
   final List<bool> _isSelected = [true, false, false];
   final TextTheme _appTextTheme = const TextTheme(
