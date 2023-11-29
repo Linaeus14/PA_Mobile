@@ -4,7 +4,7 @@ class ButtonSecondary extends StatelessWidget {
   final String _text;
   final double _width;
   final double _height;
-  final void Function() _onPressed;
+  final VoidCallback _onPressed;
   const ButtonSecondary(
       {super.key,
       required String text,
@@ -29,7 +29,7 @@ class ButtonSecondary extends StatelessWidget {
             side: BorderSide(width: 1.5, color: scheme.primary),
             minimumSize: Size(8 * _width / 10, _height / 10), //////// HERE
           ),
-          onPressed: _onPressed,
+          onPressed: () => _onPressed,
           child: Text(
             _text,
           )),

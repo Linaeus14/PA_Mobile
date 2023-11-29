@@ -17,12 +17,11 @@ class SignIn extends StatelessWidget {
                 width: 180,
                 height: 175,
                 margin: const EdgeInsets.only(top: 20),
-                decoration: BoxDecoration( 
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.asset('assets/sign_in.png', fit: BoxFit.cover),
               ),
-              
               Container(
                 margin: const EdgeInsets.only(top: 26),
                 child: const Text(
@@ -34,7 +33,6 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
               ),
-              
               Container(
                 margin: const EdgeInsets.only(top: 12),
                 child: const Text(
@@ -45,48 +43,43 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
               ),
-              
               Container(
                 margin: const EdgeInsets.only(top: 25),
                 child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Email Address',
                     hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Raleway',
-                                fontWeight: FontWeight.w400,
-                              ),
-                    prefixIcon: Icon(Icons.email),  
+                      fontSize: 16,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    prefixIcon: Icon(Icons.email),
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
-              
               Container(
                 margin: const EdgeInsets.only(top: 15),
                 child: const TextField(
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Raleway',
-                                fontWeight: FontWeight.w400,
-                              ),
+                      fontSize: 16,
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.w400,
+                    ),
                     prefixIcon: Icon(Icons.fingerprint),
                     border: OutlineInputBorder(),
                   ),
-                  obscureText: true,  
+                  obscureText: true,
                 ),
               ),
-
               Container(
                 margin: const EdgeInsets.only(top: 200),
                 width: 350,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                   
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF338249),
                     shape: RoundedRectangleBorder(
@@ -104,7 +97,6 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
               ),
-
               Container(
                 margin: const EdgeInsets.only(top: 15, left: 90),
                 child: RichText(
@@ -112,21 +104,22 @@ class SignIn extends StatelessWidget {
                     style: const TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 14,
-                      color: Colors.black,  
+                      color: Colors.black,
                     ),
                     children: [
                       const TextSpan(text: 'New to Plantdex? '),
                       TextSpan(
                         text: 'Sign Up',
                         style: const TextStyle(
-                          color: Colors.green,  
+                          color: Colors.green,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SignUp()),
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUp()),
                             );
                           },
                       ),
@@ -139,6 +132,5 @@ class SignIn extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

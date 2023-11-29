@@ -11,3 +11,4 @@ part 'main_favorite_page.dart';
 part './onboarding_screen.dart';
 part './signin_page.dart';
 part './signup_page.dart';
+part 'loading_screen.dart';

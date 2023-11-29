@@ -1,14 +1,7 @@
 part of './page.dart';
 
 class MainPage extends StatefulWidget {
-  final double _width;
-  final double _height;
-  const MainPage(
-      {super.key,
-      required double mediaQueryWidth,
-      required double mediaQueryHeight})
-      : _width = mediaQueryWidth,
-        _height = mediaQueryHeight;
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -16,17 +9,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   static final List<String> navName = ["Favorite", "Home", "Profile"];
-  double get _width => widget._width;
-  double get _height => widget._height;
   int navIndex = 1;
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> navBody = [
-      FavoritePage(mediaQueryWidth: _width, mediaQueryHeight: _height),
-      HomePage(mediaQueryWidth: _width, mediaQueryHeight: _height),
-      HomePage(mediaQueryWidth: _width, mediaQueryHeight: _height)
-    ];
+    final List<Widget> navBody = [const FavoritePage(), const HomePage(), const HomePage()];
     ColorScheme scheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(

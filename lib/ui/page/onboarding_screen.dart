@@ -1,14 +1,9 @@
 part of './page.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  final double _width;
-  final double _height;
-  const OnboardingScreen(
-      {super.key,
-      required double mediaQueryWidth,
-      required double mediaQueryHeight})
-      : _width = mediaQueryWidth,
-        _height = mediaQueryHeight;
+  const OnboardingScreen({
+    super.key,
+  });
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -17,6 +12,12 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +31,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               onTap: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MainPage(
-                              mediaQueryWidth: widget._width,
-                              mediaQueryHeight: widget._height,
-                            )));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => const MainPage()));
               },
               child: const Text(
                 'Skip',
@@ -108,13 +104,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               curve: Curves.easeIn);
                         }
                       } else {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => MainPage(
-                                      mediaQueryWidth: widget._width,
-                                      mediaQueryHeight: widget._height,
-                                    )));
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => const MainPage()));
                       }
                     });
                   },

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903942976987",
+    "project_id": "plantdex-26ba9",
+    "storage_bucket": "plantdex-26ba9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903942976987:android:4b8856c34d0f8f10dfe3fe",
+        "android_client_info": {
+          "package_name": "com.example.pa_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHS8LC5Y5HLyiVAanAnFEN1V7ZHW3okIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
