@@ -21,8 +21,9 @@ class Api {
 
     // If not cached, fetch data from the API
     try {
+      String key = "sk-dyc86567f6611ccca3203";
       var api = Uri.parse(
-          "https://perenual.com/api/species-list?key=sk-TtRm6567394dcee4a3190&page=$page&pageSize=$pageSize");
+          "https://perenual.com/api/species-list?key=$key&page=$page&pageSize=$pageSize");
 
       var request = http.Request('GET', api);
       final http.StreamedResponse response = await request.send();
@@ -46,7 +47,8 @@ class Api {
             )
             .toList();
       } else {
-        debugPrint('API request failed with status code ${response.statusCode}');
+        debugPrint(
+            'API request failed with status code ${response.statusCode}');
         debugPrint('Response body: ${await response.stream.bytesToString()}');
         throw Exception('Failed to load plants');
       }
