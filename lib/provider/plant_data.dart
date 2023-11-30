@@ -14,18 +14,12 @@ class PlantData extends ChangeNotifier {
   String _selectedCategory = _categoriesMap.keys.first;
   final List<bool> _caegoriesSelection =
       List.generate(_categoriesMap.length, (index) => false);
-  final List<bool> _favorite = List.generate(10, (index) => false);
 
   Map<String, String> get categoriesMap => _categoriesMap;
-  List<bool> get favorite => _favorite;
   List<bool> get selection => _caegoriesSelection;
   String get selectedCategory => _selectedCategory;
   int get categoriesLength => _categoriesMap.length;
 
-  void toggle(int index) {
-    _favorite[index] ? favorite[index] = false : favorite[index] = true;
-    notifyListeners();
-  }
 
   void onSelected(String typeKey) {
     _selectedCategory = typeKey;

@@ -50,10 +50,12 @@ class _PlantListState extends State<PlantList> {
         itemBuilder: (BuildContext context, int index) {
           if (index == allPlants.length) {
             // Loading indicator
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                  width: width / 10, child: const CircularProgressIndicator()),
+            return Center(
+              child: Padding(
+                padding:
+                    EdgeInsets.fromLTRB(width / 2 - 40, 8, width / 2 - 40, 8),
+                child: const CircularProgressIndicator(),
+              ),
             );
           }
           PlantClass plant = allPlants[index];
@@ -129,12 +131,10 @@ class PlantTile extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                    image: plant.image == null
-                        ? const AssetImage("null_image.png")
-                            as ImageProvider<Object>
-                        : NetworkImage(
-                            "https://images.weserv.nl/?url=${plant.image}"),
-                    fit: plant.image == null ? BoxFit.fitHeight : BoxFit.cover)),
+                    image: _tryImageUrl(plant.image),
+                    fit: _imageUrlInvalid(plant.image)
+                        ? BoxFit.fitHeight
+                        : BoxFit.cover)),
           ),
           title: Text(plant.nama!),
           subtitle: Column(
@@ -155,5 +155,32 @@ class PlantTile extends StatelessWidget {
               ),
               onPressed: () => onPressed)),
     );
+  }
+
+  ImageProvider<Object> _tryImageUrl(String? url) {
+    if (url != null && url.isNotEmpty) {
+      try {
+        return NetworkImage("https://images.weserv.nl/?url=$url");
+      } catch (e) {
+        // In case of an error, return a placeholder image
+        return const AssetImage("null_image.png");
+      }
+    } else {
+      // If the URL is null or empty, return a placeholder image
+      return const AssetImage("null_image.png");
+    }
+  }
+
+  bool _imageUrlInvalid(String? url) {
+    if (url != null && url.isNotEmpty) {
+      try {
+        NetworkImage("https://images.weserv.nl/?url=$url");
+        return false;
+      } catch (e) {
+        return true;
+      }
+    } else {
+      return true;
+    }
   }
 }
