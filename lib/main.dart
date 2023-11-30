@@ -27,23 +27,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PlantData()),
         ChangeNotifierProvider(create: (context) => DarkMode())
       ],
-      child: FutureBuilder(
-          future: Provider.of<DarkMode>(context).themeMode(),
-          builder: (context, snapshot) {
-            return MaterialApp(
-                title: 'Plantdex',
-                debugShowCheckedModeBanner: false,
-                themeMode: snapshot.data,
-                theme: ThemeData(
-                    useMaterial3: true,
-                    colorScheme: theme.colorSchemeLight,
-                    textTheme: theme.textTheme),
-                darkTheme: ThemeData(
-                    useMaterial3: true,
-                    colorScheme: theme.colorSchemeDark,
-                    textTheme: theme.textTheme),
-                home: const LaunchApp());
-          }),
+      child: Builder(
+        builder: (context) {
+          return FutureBuilder(
+              future: Provider.of<DarkMode>(context).themeMode(),
+              builder: (context, snapshot) {
+                return MaterialApp(
+                    title: 'Plantdex',
+                    debugShowCheckedModeBanner: false,
+                    themeMode: snapshot.data,
+                    theme: ThemeData(
+                        useMaterial3: true,
+                        colorScheme: theme.colorSchemeLight,
+                        textTheme: theme.textTheme),
+                    darkTheme: ThemeData(
+                        useMaterial3: true,
+                        colorScheme: theme.colorSchemeDark,
+                        textTheme: theme.textTheme),
+                    home: const LaunchApp());
+              });
+        }
+      ),
     );
   }
 }
