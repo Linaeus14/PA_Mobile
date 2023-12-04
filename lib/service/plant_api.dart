@@ -2,12 +2,16 @@ part of './service.dart';
 
 class Api {
   static Future<List<PlantClass>> _get({
-    int page = 1,
+    required int page,
     int pageSize = 20,
-    required Shared shared,
+    required int index,
   }) async {
+    //open local file
+    final shared = Shared();
+    await shared.open();
+
     // Check the cache first
-    final String cacheKey = "plantApiCache_${page}_$pageSize";
+    final String cacheKey = "plantApiCache${index}_${page}_$pageSize";
     final String? cachedData = shared.file.getString(cacheKey);
 
     if (cachedData != null) {
@@ -21,14 +25,15 @@ class Api {
 
     // If not cached, fetch data from the API
     try {
-      String key = "sk-dyc86567f6611ccca3203";
+      String key = "sk-NDmD65684e3752f783203";
+      List<String> headpoints = ["", "&cycle=perennial", "&cycle=annual"];
       var api = Uri.parse(
-          "https://perenual.com/api/species-list?key=$key&page=$page&pageSize=$pageSize");
+          "https://perenual.com/api/species-list?key=$key&page=$page&pageSize=$pageSize${headpoints[index]}");
 
       var request = http.Request('GET', api);
       final http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
+        debugPrint("API GET request succes");
         final String responseBody = await response.stream.bytesToString();
         final Map<String, dynamic>? body = json.decode(responseBody);
 
@@ -58,9 +63,8 @@ class Api {
     }
   }
 
-  static Future<List<PlantClass>> futureData({int page = 1}) async {
-    final shared = Shared();
-    await shared.open();
-    return await _get(page: page, shared: shared);
+  static Future<List<PlantClass>> futureData(
+      {required int page, required int index}) async {
+    return await _get(page: page, index: index);
   }
 }

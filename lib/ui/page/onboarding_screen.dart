@@ -35,14 +35,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (_) => const MainPage()));
               },
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              child:
+                  Text('Skip', style: Theme.of(context).textTheme.titleMedium),
             ),
           )
         ],
@@ -167,7 +161,7 @@ class CreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme scheme = Theme.of(context).colorScheme;
+    TextTheme textStyle = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 80),
       child: Column(
@@ -183,11 +177,7 @@ class CreatePage extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: scheme.primary,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+            style: textStyle.headlineMedium
           ),
           const SizedBox(
             height: 20,
@@ -195,11 +185,7 @@ class CreatePage extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-              color: scheme.onSurfaceVariant,
-            ),
+            style: textStyle.titleLarge
           ),
           const SizedBox(
             height: 20,

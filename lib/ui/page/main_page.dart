@@ -19,11 +19,31 @@ class _MainPageState extends State<MainPage> {
       const HomePage()
     ];
     ColorScheme scheme = Theme.of(context).colorScheme;
+    DarkMode darkmode = Provider.of<DarkMode>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        leading: Text(navName[navIndex]),
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(navName[navIndex],
+              style: Theme.of(context).textTheme.headlineSmall),
+        ),
+        backgroundColor: scheme.background,
+        foregroundColor: scheme.onBackground,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.sunrise))
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            margin: const EdgeInsets.only(right: 10),
+            child: IconButton(
+                onPressed: () async {
+                  darkmode.getThemeMode();
+                  darkmode.isDark
+                      ? darkmode.changeMode(0)
+                      : darkmode.changeMode(1);
+                },
+                icon: darkmode.isDark
+                    ? const Icon(CupertinoIcons.moon_stars)
+                    : const Icon(CupertinoIcons.sun_dust)),
+          )
         ],
       ),
       body: navBody[navIndex],
