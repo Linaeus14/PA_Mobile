@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 
 part './main_page.dart';
 part './main_home_page.dart';
-part 'main_favorite_page.dart';
+part './main_favorite_page.dart';
 part './onboarding_screen.dart';
 part './signin_page.dart';
 part './signup_page.dart';
-part 'loading_screen.dart';
+part './loading_screen.dart';
+part './profile_page.dart';

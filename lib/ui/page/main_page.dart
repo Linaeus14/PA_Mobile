@@ -16,7 +16,7 @@ class _MainPageState extends State<MainPage> {
     final List<Widget> navBody = [
       const FavoritePage(),
       const HomePage(),
-      const HomePage()
+      const ProfilePage()
     ];
     ColorScheme scheme = Theme.of(context).colorScheme;
     DarkMode darkmode = Provider.of<DarkMode>(context, listen: false);

@@ -16,7 +16,7 @@ class SignButton extends StatelessWidget {
     ColorScheme scheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(24.0),
       child: Column(
         children: [
           Padding(

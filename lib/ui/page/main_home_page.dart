@@ -105,8 +105,20 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error: ${snapshot.error}'),
+                      return SizedBox(
+                        width: width,
+                        height: height / 2,
+                        child: Center(
+                          child: Text('Error: ${snapshot.error}'),
+                        ),
+                      );
+                    } else if (allPlants.isEmpty) {
+                      return SizedBox(
+                        width: width,
+                        height: height / 2,
+                        child: const Center(
+                          child: Text('Surpassed API Rate Limit'),
+                        ),
                       );
                     } else {
                       return SizedBox(
@@ -119,32 +131,31 @@ class _HomePageState extends State<HomePage> {
                             await _loadData();
                           },
                           child: ListView.builder(
-                            controller: _scrollController,
-                            itemCount: allPlants.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (index == allPlants.length) {
-                                // Loading indicator
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        width / 2 - 40, 8, width / 2 - 40, 8),
-                                    child: const CircularProgressIndicator(),
-                                  ),
-                                );
-                              } else if (index < allPlants.length) {
-                                PlantClass plant = allPlants[index];
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: PlantTile(
-                                    plant: plant,
-                                    isOn: false,
-                                    onPressed: () {},
-                                  ),
-                                );
-                              }
-                              return const SizedBox.shrink();
-                            },
-                          ),
+                              controller: _scrollController,
+                              itemCount: allPlants.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index == allPlants.length) {
+                                  // Loading indicator
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          width / 2 - 40, 8, width / 2 - 40, 8),
+                                      child: const CircularProgressIndicator(),
+                                    ),
+                                  );
+                                } else if (index < allPlants.length) {
+                                  PlantClass plant = allPlants[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: PlantTile(
+                                      plant: plant,
+                                      isOn: false,
+                                      onPressed: () {},
+                                    ),
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              }),
                         ),
                       );
                     }
@@ -161,9 +172,7 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < categoriesMap.length; i++) {
       widgets.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Text(
-          _categoriesMap[_categoriesMap.keys.elementAt(i)]!
-        ),
+        child: Text(_categoriesMap[_categoriesMap.keys.elementAt(i)]!),
       ));
     }
     return widgets;
@@ -191,6 +200,7 @@ class _HomePageState extends State<HomePage> {
       });
     } catch (e) {
       debugPrint('Error loading data: $e');
+      allPlants.clear();
     }
   }
 

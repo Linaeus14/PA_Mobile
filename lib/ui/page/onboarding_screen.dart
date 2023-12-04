@@ -56,19 +56,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 image: 'plantdex1.png',
                 title: "Learn more about plants",
                 description:
-                    "Read how to care for plants in our rich plants guide.",
+                    "Read others names for plants in our plants list.",
               ),
               CreatePage(
                 image: 'plantdex2.png',
-                title: "Find a plant lover friend",
+                title: "Find a plant that you love",
                 description:
-                    "Are you a plant lover? Connect with other plant lovers.",
+                    "Are you a plant lover? See if it's on our list.",
               ),
               CreatePage(
                 image: 'plantdex3.png',
                 title: "Plant a tree, green the Earth",
                 description:
-                    "Find almost all types of plants that you like here.",
+                    "Find almost all types of plants that you like based on life cycles.",
               ),
             ],
           ),
