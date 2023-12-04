@@ -3,7 +3,7 @@ part of './provider.dart';
 class DarkMode with ChangeNotifier {
   static final List<ThemeMode> _modes = [ThemeMode.light, ThemeMode.dark];
   static bool _isDark = true;
-  ThemeMode _active = ThemeMode.dark;
+  ThemeMode _active = ThemeMode.system;
 
   static Future<ThemeMode> _get({required Shared shared}) async {
     final int? cachedData = shared.file.getInt("themeModeCache");

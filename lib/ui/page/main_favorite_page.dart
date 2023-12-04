@@ -28,13 +28,18 @@ class FavoritePage extends StatelessWidget {
         ],
       );
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamed(context, "authUp");
-      });
       return Scaffold(
           body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: Text(
+              "Sign In to Use This Feature!",
+              style: Theme.of(context).textTheme.headlineSmall,
+            )),
+          ),
           SignButton(
             signInButton: true,
             onPressed: () => Navigator.pushNamed(context, 'authIn'),

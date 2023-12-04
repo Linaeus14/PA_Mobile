@@ -161,31 +161,28 @@ class CreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textStyle = Theme.of(context).textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 80),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 350,
-            child: Image.asset(image),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 350,
+              child: Image.asset(image),
+            ),
           ),
-          const SizedBox(
-            height: 20,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(title,
+                textAlign: TextAlign.center, style: textTheme.headlineMedium),
           ),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: textStyle.headlineMedium
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: textStyle.titleLarge
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(description,
+                textAlign: TextAlign.center, style: textTheme.titleLarge),
           ),
           const SizedBox(
             height: 20,

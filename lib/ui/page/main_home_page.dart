@@ -61,62 +61,18 @@ class _HomePageState extends State<HomePage> {
             children: [
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("Plants"),
-              ),
-              SizedBox(
-                  width: width,
-                  height: height / 2,
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      currentPage = 1;
-                      allPlants.clear();
-                      await _loadData();
-                    },
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: allPlants.length + (isLoading ? 1 : 0),
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index == allPlants.length) {
-                          // Loading indicator
-                          return Center(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  width / 2 - 40, 8, width / 2 - 40, 8),
-                              child: const CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        PlantClass plant = allPlants[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PlantTile(
-                            plant: plant,
-                            isOn: false,
-                            onPressed: () {},
-                          ),
-                        );
-                      },
-                    ),
-                  ))
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
                 child: Text("Life Cycle"),
               ),
               SizedBox(
                 width: width,
-                height: height / 10,
+                height: height / 19,
                 child: Center(
                   child: ToggleButtons(
                     color: scheme.primary,
                     borderColor: scheme.primary,
-                    borderWidth: 1,
+                    borderWidth: 0.5,
+                    constraints: BoxConstraints(
+                        minWidth: width / 3.38, minHeight: height / 20),
                     borderRadius: BorderRadius.circular(8.0),
                     fillColor: scheme.primary,
                     selectedColor: scheme.background,
@@ -126,6 +82,73 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Plants"),
+              ),
+              FutureBuilder(
+                  future: _loadData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SizedBox(
+                        width: width,
+                        height: height / 2,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    } else {
+                      return SizedBox(
+                        width: width,
+                        height: height / 2,
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            currentPage = 1;
+                            allPlants.clear();
+                            await _loadData();
+                          },
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: allPlants.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == allPlants.length) {
+                                // Loading indicator
+                                return Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        width / 2 - 40, 8, width / 2 - 40, 8),
+                                    child: const CircularProgressIndicator(),
+                                  ),
+                                );
+                              } else if (index < allPlants.length) {
+                                PlantClass plant = allPlants[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: PlantTile(
+                                    plant: plant,
+                                    isOn: false,
+                                    onPressed: () {},
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                  }),
             ],
           ),
         )
@@ -138,8 +161,9 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < categoriesMap.length; i++) {
       widgets.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Text(_categoriesMap[_categoriesMap.keys.elementAt(i)]!,
-            style: const TextStyle(fontSize: 12)),
+        child: Text(
+          _categoriesMap[_categoriesMap.keys.elementAt(i)]!
+        ),
       ));
     }
     return widgets;

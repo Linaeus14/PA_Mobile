@@ -7,6 +7,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
@@ -31,63 +32,47 @@ class SignUp extends StatelessWidget {
                             height: height / 4,
                           ),
                         ),
-                        const Center(
-                          child: Text(
-                            'Get on Board!',
-                            style: TextStyle(
-                              fontFamily: 'Raleway',
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        Center(
+                          child: Text('Get on Board!',
+                              style: textTheme.headlineSmall),
                         ),
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Create a new account to access all our features',
-                              style: TextStyle(
-                                fontFamily: 'Raleway',
-                                fontSize: 14,
-                              ),
-                            ),
+                                'Create a new account to access all our features',
+                                style: textTheme.titleSmall),
                           ),
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'Full Name',
-                                hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                prefixIcon: Icon(Icons.person),
-                                border: OutlineInputBorder(),
+                                hintStyle: textTheme.bodyLarge,
+                                prefixIcon: const Icon(Icons.person),
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                           ),
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'Email Address',
-                                hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                prefixIcon: Icon(Icons.email),
-                                border: OutlineInputBorder(),
+                                hintStyle: textTheme.bodyLarge,
+                                prefixIcon: const Icon(Icons.email),
+                                border: const OutlineInputBorder(),
                               ),
                               obscureText: true,
                             ),
@@ -95,16 +80,13 @@ class SignUp extends StatelessWidget {
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'Password',
-                                hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                prefixIcon: Icon(Icons.fingerprint),
-                                border: OutlineInputBorder(),
+                                hintStyle: textTheme.bodyLarge,
+                                prefixIcon: const Icon(Icons.fingerprint),
+                                border: const OutlineInputBorder(),
                               ),
                               obscureText: true,
                             ),

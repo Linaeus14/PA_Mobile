@@ -3,7 +3,7 @@ part of './widget.dart';
 class SignButton extends StatelessWidget {
   const SignButton(
       {super.key,
-      required this.signInButton,
+      this.signInButton = true,
       required this.onPressed,
       this.hideBottom = false});
   final bool signInButton;
@@ -14,6 +14,7 @@ class SignButton extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     ColorScheme scheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -28,17 +29,13 @@ class SignButton extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: scheme.primary,
                   foregroundColor: scheme.onPrimary,
+                  textStyle: textTheme.bodyLarge,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
                 child: Text(
                   signInButton ? 'Sign In' : 'Sign Up',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
                 ),
               ),
             ),
@@ -49,16 +46,12 @@ class SignButton extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: RichText(
                     text: TextSpan(
-                      style: const TextStyle(
-                        fontFamily: 'Raleway',
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
                       children: [
                         TextSpan(
                             text: signInButton
                                 ? "Don't have an account? "
-                                : 'Have an Account? '),
+                                : 'Have an Account? ',
+                            style: textTheme.bodySmall),
                         TextSpan(
                           text: signInButton ? 'Sign Up' : 'Sign In',
                           style: TextStyle(

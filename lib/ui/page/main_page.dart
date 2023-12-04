@@ -22,28 +22,30 @@ class _MainPageState extends State<MainPage> {
     DarkMode darkmode = Provider.of<DarkMode>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: scheme.background,
+        surfaceTintColor: scheme.background,
         title: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(navName[navIndex],
-              style: Theme.of(context).textTheme.headlineSmall),
+          child: Text(
+            navName[navIndex],
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
-        backgroundColor: scheme.background,
-        foregroundColor: scheme.onBackground,
         actions: [
           Container(
             padding: const EdgeInsets.all(8.0),
             margin: const EdgeInsets.only(right: 10),
             child: IconButton(
-                onPressed: () async {
-                  darkmode.getThemeMode();
-                  darkmode.isDark
-                      ? darkmode.changeMode(0)
-                      : darkmode.changeMode(1);
-                },
-                icon: darkmode.isDark
-                    ? const Icon(CupertinoIcons.moon_stars)
-                    : const Icon(CupertinoIcons.sun_dust)),
-          )
+              onPressed: () async {
+                darkmode.isDark
+                    ? darkmode.changeMode(0)
+                    : darkmode.changeMode(1);
+              },
+              icon: darkmode.isDark
+                  ? const Icon(CupertinoIcons.moon_stars)
+                  : const Icon(CupertinoIcons.sun_dust),
+            ),
+          ),
         ],
       ),
       body: navBody[navIndex],

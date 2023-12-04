@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    ThemeModeData theme = ThemeModeData();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => DarkMode()),
@@ -29,6 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(builder: (context) {
         DarkMode darkMode = Provider.of<DarkMode>(context);
+        ThemeModeData theme = ThemeModeData();
         return FutureBuilder(
             future: darkMode.getThemeMode(),
             builder: (context, snapshot) {
@@ -52,112 +52,6 @@ class MyApp extends StatelessWidget {
             });
       }),
     );
-  }
-}
-
-class ThemeModeData {
-  final ColorScheme colorSchemeDark = ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 23, 156, 61),
-      brightness: Brightness.dark);
-  final ColorScheme colorSchemeLight = ColorScheme.fromSeed(
-      seedColor: const Color.fromARGB(255, 23, 156, 61),
-      brightness: Brightness.light);
-  TextTheme textThemeLight = const TextTheme();
-  TextTheme textThemeDark = const TextTheme();
-  List<ColorScheme> schemes = [];
-  List<TextTheme> textThemes = [];
-
-  ThemeModeData() {
-    schemes.addAll([colorSchemeLight, colorSchemeDark]);
-    textThemes.addAll([textThemeLight, textThemeDark]);
-    for (int i = 0; i < 2; i++) {
-      textThemes[i] = TextTheme(
-        displayLarge: TextStyle(
-            fontSize: 96,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            letterSpacing: -1.5,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        displayMedium: TextStyle(
-            fontSize: 60,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            letterSpacing: -0.5,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        displaySmall: TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.w300,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        headlineLarge: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.25,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        headlineMedium: TextStyle(
-            fontSize: 34,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.25,
-            fontFamily: 'Roboto',
-            color: schemes[i].primary),
-        headlineSmall: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        titleLarge: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.15,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        titleMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.15,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        titleSmall: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.1,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        bodyLarge: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.5,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        bodyMedium: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.25,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-        bodySmall: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0.4,
-            fontFamily: 'Roboto',
-            color: schemes[i].onBackground),
-      );
-    }
   }
 }
 
@@ -206,7 +100,204 @@ Future<Widget> checkAuthenticationState(BuildContext context) async {
       await userData.getData();
     }
     return const MainPage();
-  } on Exception {
-    return const MainPage();
+  } on Exception catch (e) {
+    debugPrint(e.toString());
+  }
+  return const MainPage();
+}
+
+class ThemeModeData {
+  static ThemeModeData? _instance;
+
+  final ColorScheme colorSchemeLight;
+  final ColorScheme colorSchemeDark;
+  late TextTheme textThemeLight;
+  late TextTheme textThemeDark;
+
+  factory ThemeModeData() {
+    _instance ??= ThemeModeData._internal();
+    return _instance!;
+  }
+
+  ThemeModeData._internal()
+      : colorSchemeLight = ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 23, 156, 61),
+            brightness: Brightness.light),
+        colorSchemeDark = ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 23, 156, 61),
+            brightness: Brightness.dark) {
+    textThemeLight = TextTheme(
+      displayLarge: TextStyle(
+          fontSize: 96,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: -1.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      displayMedium: TextStyle(
+          fontSize: 60,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: -0.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      displaySmall: TextStyle(
+          fontSize: 48,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      headlineLarge: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      headlineMedium: TextStyle(
+          fontSize: 34,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.primary),
+      headlineSmall: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.15,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      titleMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.15,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      titleSmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.1,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+      bodySmall: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.4,
+          fontFamily: 'Roboto',
+          color: colorSchemeLight.onBackground),
+    );
+
+    textThemeDark = TextTheme(
+      displayLarge: TextStyle(
+          fontSize: 96,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: -1.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      displayMedium: TextStyle(
+          fontSize: 60,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: -0.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      displaySmall: TextStyle(
+          fontSize: 48,
+          fontWeight: FontWeight.w300,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      headlineLarge: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      headlineMedium: TextStyle(
+          fontSize: 34,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.primary),
+      headlineSmall: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.15,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      titleMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.15,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      titleSmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.1,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.5,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      bodyMedium: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.25,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+      bodySmall: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.4,
+          fontFamily: 'Roboto',
+          color: colorSchemeDark.onBackground),
+    );
   }
 }

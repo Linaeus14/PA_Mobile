@@ -4,7 +4,6 @@ import 'package:pa_mobile/model/model.dart';
 import 'package:pa_mobile/provider/provider.dart';
 import 'package:pa_mobile/service/service.dart';
 import 'package:pa_mobile/ui/widget/widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 
 part './main_page.dart';
