@@ -1,60 +1,57 @@
 part of './page.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     ColorScheme scheme = Theme.of(context).colorScheme;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
-    return SingleChildScrollView(
-      controller: _scrollController,
-      reverse: true,
+    return SizedBox(
+      height: height,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: scheme.surfaceVariant,
-            child: const Icon(
-              Icons.person,
-              size: 40,
-              color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: scheme.surfaceVariant,
+                  child: Icon(
+                    Icons.person,
+                    size: 40,
+                    color: scheme.onBackground,
+                  ),
+                ),
+                const Text('Saban',
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    )),
+                const Text('saban@gmail.com',
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ],
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Text('Saban',
-              style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              )),
-          const Text('saban@gmail.com,',
-              style: TextStyle(
-                fontFamily: 'Raleway',
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              )),
-          const SizedBox(height: 40),
           Container(
-              constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height - 347),
-              width: MediaQuery.of(context).size.width,
+              constraints: BoxConstraints(minHeight: height / 1.8),
+              width: width,
               padding: const EdgeInsets.all(20.0),
+              margin: EdgeInsets.zero,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30.0),
                     topRight: Radius.circular(30.0)),
-                color: scheme.onPrimary,
+                color: scheme.surfaceVariant,
               ),
               child: Column(
                 children: [
@@ -62,16 +59,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 20,
                   ),
                   ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       Icons.info,
-                      color: Colors.white,
+                      color: scheme.onBackground,
                       size: 36,
                     ),
                     title: const Text("About Us", style: TextStyle()),
                     subtitle: const Text("This is Us :)", style: TextStyle()),
-                    trailing: const Icon(
+                    trailing: Icon(
                       Icons.navigate_next,
-                      color: Colors.white,
+                      color: scheme.onBackground,
                       size: 28,
                     ),
                     onTap: () {},
@@ -83,7 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       size: 36,
                     ),
                     title: const Text("Delete Account", style: TextStyle()),
-                    subtitle: const Text("Dont Leave Us :(", style: TextStyle()),
+                    subtitle:
+                        const Text("Dont Leave Us :(", style: TextStyle()),
                     trailing: Icon(
                       Icons.navigate_next,
                       color: Colors.red[400],

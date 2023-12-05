@@ -14,7 +14,7 @@ class UserData extends ChangeNotifier {
   }
 
   Future<void> addUserToFirestore(
-      String id, String email, String nama, String imagePath) async {
+      String id, String email, String nama) async {
     try {
       CollectionReference users = _firestore.collection('users');
       DocumentReference documentReference = users.doc(id);
