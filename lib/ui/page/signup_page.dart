@@ -81,6 +81,7 @@ class _SignUpState extends State<SignUp> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
+                                      controller: _ctrlName,
                                       validator: (value) {
                                         _validate(value, 0);
                                         return null;
@@ -96,6 +97,7 @@ class _SignUpState extends State<SignUp> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
+                                      controller: _ctrlEmail,
                                       validator: (value) {
                                         _validate(value, 1);
                                         return null;
@@ -111,6 +113,7 @@ class _SignUpState extends State<SignUp> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
+                                      controller: _ctrlPassword,
                                       obscureText: _isPasswordHidden,
                                       validator: (value) {
                                         _validate(value, 2);
@@ -171,7 +174,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 SignButton(
                   signInButton: false,
-                  onPressed: () {
+                  onPressed: () async {
                     _handleSubmit();
                   },
                 ),
@@ -191,7 +194,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  void _handleSubmit() async {
+  Future<void> _handleSubmit() async {
     setState(() {
       validator[3] = false;
     });
@@ -201,29 +204,39 @@ class _SignUpState extends State<SignUp> {
         _ctrlPassword.text.isEmpty ||
         _ctrlName.text.isEmpty) return;
 
-    final String name = _ctrlName.value.text;
     final String email = _ctrlEmail.value.text;
     final String password = _ctrlPassword.value.text;
     final UserData userData = Provider.of<UserData>(context, listen: false);
 
-    Map<String, dynamic> registerRequest = await Auth().regis(email, password);
-
     try {
-      if (registerRequest['success'] != null) {
+      Map<String, dynamic> registerRequest =
+          await Auth().regis(email, password);
+
+      if (registerRequest['success']) {
         String uid = registerRequest['userId'];
         userData.userId = uid;
-        await userData.addUserToFirestore(uid, email, name);
+        await userData.addUserToFirestore(uid, _ctrlEmail.text, _ctrlName.text);
         await userData.getData();
-        dialog(text: "Registrasi Berhasil");
+
         if (!context.mounted) return;
-        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: ((context) => const MainPage())));
+      } else {
+        setState(() {
+          validator[3] = true;
+        });
+        dialog(
+            text: "Registrasi Gagal", icon: const Icon(Icons.warning_outlined));
+        return;
       }
+    } on Exception catch (e) {
       setState(() {
         validator[3] = true;
       });
-      dialog(text: "Registrasi Gagal");
-    } on Exception catch (e) {
-      dialog(text: "Registrasi Gagal : $e");
+      dialog(
+          text: "Registrasi Gagal : $e",
+          icon: const Icon(Icons.warning_outlined));
+      return;
     }
   }
 

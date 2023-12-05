@@ -47,7 +47,8 @@ class FavoritePage extends StatelessWidget {
             ),
             SignButton(
               signInButton: true,
-              onPressed: () => Navigator.pushNamed(context, 'authIn'),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const SignIn()))),
               hideBottom: true,
             ),
           ],

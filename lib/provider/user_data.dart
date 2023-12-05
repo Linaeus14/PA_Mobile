@@ -13,8 +13,7 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addUserToFirestore(
-      String id, String email, String nama) async {
+  Future<void> addUserToFirestore(String id, String email, String nama) async {
     try {
       CollectionReference users = _firestore.collection('users');
       DocumentReference documentReference = users.doc(id);
@@ -65,7 +64,7 @@ class UserData extends ChangeNotifier {
     _data = UserClass(
         nama: userData?['nama'],
         email: userData?['email'],
-        favorite: userData?['favorite']);
+        favorite: List.from(userData?['favorite']));
   }
 
   Future<Map<String, dynamic>?> _getDocumentData() async {
@@ -78,12 +77,9 @@ class UserData extends ChangeNotifier {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await collection.doc(_userId).get();
 
-      // Check if the document exists
       if (documentSnapshot.exists) {
-        // Return the document data
         return documentSnapshot.data();
       } else {
-        // Document does not exist
         return null;
       }
     } catch (e) {

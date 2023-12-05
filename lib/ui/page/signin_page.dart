@@ -146,7 +146,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ),
-                SignButton(onPressed: () {
+                SignButton(onPressed: () async {
                   _handleSignIn();
                 })
               ],
@@ -179,17 +179,21 @@ class _SignInState extends State<SignIn> {
     try {
       Map<String, dynamic>? loginSucces = await Auth().login(email, password);
 
-      if (loginSucces["succes"] != null) {
+      if (loginSucces["success"]) {
         userData.userId = loginSucces['userId'];
         await userData.getData();
         if (!context.mounted) return;
-        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: ((context) => const MainPage())));
+      } else {
+        setState(() {
+          validator[2] = true;
+        });
+        return;
       }
-      setState(() {
-        validator[2] = true;
-      });
     } on Exception catch (e) {
       debugPrint("Login failed: $e");
+      return;
     }
   }
 }

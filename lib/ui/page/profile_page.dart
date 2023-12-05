@@ -8,33 +8,37 @@ class ProfilePage extends StatelessWidget {
     ColorScheme scheme = Theme.of(context).colorScheme;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    UserData userData = Provider.of<UserData>(context, listen: false);
 
     return SizedBox(
       height: height,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: scheme.surfaceVariant,
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
-                    color: scheme.onBackground,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: scheme.surfaceVariant,
+                    child: Icon(
+                      Icons.person,
+                      size: 60,
+                      color: scheme.onBackground,
+                    ),
                   ),
                 ),
-                const Text('Saban',
-                    style: TextStyle(
+                Text(userData.data?.nama ?? "Guest",
+                    style: const TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     )),
-                const Text('saban@gmail.com',
-                    style: TextStyle(
+                Text(userData.data?.email ?? "-",
+                    style: const TextStyle(
                       fontFamily: 'Raleway',
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -55,46 +59,87 @@ class ProfilePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.info,
-                      color: scheme.onBackground,
-                      size: 36,
-                    ),
-                    title: const Text("About Us", style: TextStyle()),
-                    subtitle: const Text("This is Us :)", style: TextStyle()),
-                    trailing: Icon(
-                      Icons.navigate_next,
-                      color: scheme.onBackground,
-                      size: 28,
-                    ),
+                  OptionTile(
+                    icon: Icons.info,
+                    title: "About Us",
+                    subtitle: "This is Us :)",
                     onTap: () {},
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Colors.red[400],
-                      size: 36,
-                    ),
-                    title: const Text("Delete Account", style: TextStyle()),
-                    subtitle:
-                        const Text("Dont Leave Us :(", style: TextStyle()),
-                    trailing: Icon(
-                      Icons.navigate_next,
-                      color: Colors.red[400],
-                      size: 28,
-                    ),
-                    onTap: () {},
-                  ),
-                  const SizedBox(
-                    height: 100,
-                  ),
+                  userData.id != null
+                      ? OptionTile(
+                          icon: Icons.delete_forever,
+                          title: "Delete Account",
+                          subtitle: "Dont Leave Us :(",
+                          onTap: () {},
+                        )
+                      : const Center(),
+                  userData.id != null
+                      ? OptionTile(
+                          icon: Icons.logout,
+                          title: "sign Out",
+                          subtitle: "Rest for now",
+                          onTap: () async {
+                            await Auth().signOut();
+                            userData.disposeVar();
+                            if (context.mounted) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => const MainPage()));
+                            }
+                          })
+                      : const Center()
                 ],
               )),
         ],
+      ),
+    );
+  }
+}
+
+class OptionTile extends StatelessWidget {
+  const OptionTile(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.subtitle,
+      required this.onTap});
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(30.0),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: ListTile(
+            leading: Icon(
+              icon,
+              color: scheme.primary,
+              size: 36,
+            ),
+            title: Text(title, style: const TextStyle()),
+            subtitle: Text(subtitle, style: const TextStyle()),
+            trailing: Icon(
+              Icons.navigate_next,
+              color: scheme.onBackground,
+              size: 28,
+            ),
+            onTap: () {
+              onTap();
+            },
+          ),
+        ),
       ),
     );
   }

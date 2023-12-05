@@ -60,8 +60,17 @@ class SignButton extends StatelessWidget {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.popAndPushNamed(
-                                  context, signInButton ? 'authUp' : 'authIn');
+                              Navigator.pop(context);
+                              signInButton
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const SignUp()))
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignIn()));
                             },
                         ),
                       ],

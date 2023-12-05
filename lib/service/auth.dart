@@ -31,8 +31,10 @@ class Auth {
       final user = userCredential.user;
       final userId = user?.uid;
 
+      debugPrint("Login Success");
       return {'success': true, 'userId': userId};
     } catch (e) {
+      debugPrint("Login Failed");
       return {'success': false, 'userId': null};
     }
   }

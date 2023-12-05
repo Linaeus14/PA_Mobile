@@ -44,10 +44,6 @@ class MyApp extends StatelessWidget {
                       useMaterial3: true,
                       colorScheme: theme.colorSchemeDark,
                       textTheme: theme.textThemeDark),
-                  routes: {
-                    "authIn": (context) => const SignIn(),
-                    "authUp": (context) => const SignUp(),
-                  },
                   home: const LaunchApp());
             });
       }),
@@ -68,7 +64,7 @@ class LaunchApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
         } else if (snapshot.hasError) {
-          return const Center(child: Text("Failed to load"));
+          return Center(child: Text("Failed to load: ${snapshot.error}"));
         } else {
           return snapshot.data!;
         }
@@ -85,7 +81,10 @@ class LaunchApp extends StatelessWidget {
       await saveData.file.setBool('firstLaunch', false);
       return const OnboardingScreen();
     } else {
-      if (!context.mounted) return const LoadingScreen();
+      if (!context.mounted) {
+        return const Scaffold(
+            body: Center(child: Text("LaunchApp Failed")));
+      }
       return checkAuthenticationState(context);
     }
   }
@@ -98,8 +97,8 @@ Future<Widget> checkAuthenticationState(BuildContext context) async {
       UserData userData = Provider.of<UserData>(context, listen: false);
       userData.userId = user.uid;
       await userData.getData();
+      return const MainPage();
     }
-    return const MainPage();
   } on Exception catch (e) {
     debugPrint(e.toString());
   }
@@ -108,7 +107,6 @@ Future<Widget> checkAuthenticationState(BuildContext context) async {
 
 class ThemeModeData {
   static ThemeModeData? _instance;
-
   final ColorScheme colorSchemeLight;
   final ColorScheme colorSchemeDark;
   late TextTheme textThemeLight;
