@@ -1,7 +1,9 @@
 part of './widget.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({super.key});
+  const SearchField({super.key, required this.onSubmitted});
+
+  final void Function(String)? onSubmitted;
 
   @override
   State<SearchField> createState() => _SearchFieldState();
@@ -26,6 +28,7 @@ class _SearchFieldState extends State<SearchField> {
         // Use a Material design search bar
         child: TextField(
           controller: _searchController,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
               filled: true,
               fillColor: scheme.surfaceVariant,
@@ -41,14 +44,11 @@ class _SearchFieldState extends State<SearchField> {
                             setState(() => _searchController.clear()),
                       ),
                     ),
-              // Add a search icon or button to the search bar
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {
-                    // Perform the search here
-                  },
+                  onPressed: () {},
                 ),
               ),
               border: OutlineInputBorder(
@@ -63,6 +63,7 @@ class _SearchFieldState extends State<SearchField> {
                   borderSide: BorderSide(
                       color: scheme.primary, style: BorderStyle.solid))),
           onChanged: (text) => setState(() => _searchController),
+          onSubmitted: widget.onSubmitted,
         ),
       ),
     );

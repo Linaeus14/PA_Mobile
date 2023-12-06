@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
 
 class LaunchApp extends StatelessWidget {
   const LaunchApp({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

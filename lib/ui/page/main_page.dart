@@ -22,6 +22,7 @@ class _MainPageState extends State<MainPage> {
     DarkMode darkmode = Provider.of<DarkMode>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: scheme.background,
         surfaceTintColor: scheme.background,
         title: Padding(

@@ -1,6 +1,13 @@
 part of './service.dart';
 
 class Api {
+  static List<String> keys = [
+    "sk-NDmD65684e3752f783203",
+    "sk-TtRm6567394dcee4a3190",
+    "sk-Tyvx657085b5ed0713364"
+  ];
+  static int keyIndex = 0;
+
   static Future<List<PlantClass>> _get({
     required int page,
     int pageSize = 20,
@@ -25,10 +32,9 @@ class Api {
 
     // If not cached, fetch data from the API
     try {
-      String key = "sk-NDmD65684e3752f783203";
       List<String> headpoints = ["", "&cycle=perennial", "&cycle=annual"];
       var api = Uri.parse(
-          "https://perenual.com/api/species-list?key=$key&page=$page&pageSize=$pageSize${headpoints[index]}");
+          "https://perenual.com/api/species-list?key=${keys[keyIndex]}&page=$page&pageSize=$pageSize${headpoints[index]}");
 
       var request = http.Request('GET', api);
       final http.StreamedResponse response = await request.send();
@@ -41,7 +47,6 @@ class Api {
           debugPrint('API response body is null or does not contain data.');
           throw Exception('GET Retrieve Nothing');
         }
-
         // Cache the data
         shared.file.setString(cacheKey, json.encode(body));
 
@@ -51,6 +56,13 @@ class Api {
               (json) => PlantClass.fromJson(json),
             )
             .toList();
+      } else if (response.statusCode == 429) {
+        keyIndex++;
+        if (keyIndex < keys.length) {
+          return _get(page: page, index: index);
+        }
+        debugPrint('Response body: ${await response.stream.bytesToString()}');
+        throw Exception('Failed to load plants');
       } else {
         debugPrint(
             'API request failed with status code ${response.statusCode}');

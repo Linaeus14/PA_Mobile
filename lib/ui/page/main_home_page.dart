@@ -19,8 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   int _toogleIndex = 0;
   int currentPage = 1;
-  bool isLoading = false;
   bool limitreached = false;
+  bool noMoreData = false;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
     _loadData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+              _scrollController.position.maxScrollExtent &&
+          !noMoreData) {
         // User reached the bottom, load more data
         _loadMoreData();
       }
@@ -58,9 +59,11 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: SearchField(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SearchField(
+                    onSubmitted: (value) {},
+                  ),
                 ),
                 SizedBox(
                   width: width,
@@ -93,44 +96,49 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: width,
                 height: height / 1.5,
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    currentPage = 1;
-                    allPlants.clear();
-                    await _loadData();
-                  },
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: allPlants.length + 1, // +1 for loading indicator
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == allPlants.length && !limitreached) {
-                        return Center(
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                width / 2 - 40, 8, width / 2 - 40, 8),
-                            child: const CircularProgressIndicator(),
-                          ),
-                        );
-                      } else if (limitreached) {
-                        return Center(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: allPlants.length + 1, // +1 for loading indicator
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == allPlants.length && !limitreached) {
+                      return Center(
+                        child: noMoreData
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'No More Data.',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    width / 2 - 40, 8, width / 2 - 40, 8),
+                                child: const CircularProgressIndicator(),
+                              ),
+                      );
+                    } else if (limitreached) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'API RateLimit Surpassed, try again after 24hours passed',
+                            'API RateLimit Surpassed, try again after 24 hours passed',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
-                        );
-                      } else {
-                        PlantClass plant = allPlants[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PlantTile(
-                            plant: plant,
-                            isOn: false,
-                            onPressed: () {},
-                          ),
-                        );
-                      }
-                    },
-                  ),
+                        ),
+                      );
+                    } else {
+                      PlantClass plant = allPlants[index];
+                      return Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 4.0),
+                        child: PlantTile(
+                          plant: plant,
+                          isOn: false,
+                          onPressed: () {},
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],
@@ -158,9 +166,11 @@ class _HomePageState extends State<HomePage> {
       }
       _toogleIndex = index;
       limitreached = false;
+      noMoreData = false;
+      currentPage = 1;
+      _scrollController.jumpTo(0.0);
+      allPlants.clear();
     });
-    allPlants.clear();
-    currentPage = 1;
     _loadData();
   }
 
@@ -176,31 +186,25 @@ class _HomePageState extends State<HomePage> {
       debugPrint('Error loading data: $e');
       setState(() {
         limitreached = true;
+        allPlants.clear();
       });
-      allPlants.clear();
     }
   }
 
   Future<void> _loadMoreData() async {
-    if (!isLoading) {
+    try {
+      List<PlantClass> newPlants =
+          await Api.futureData(page: currentPage, index: _toogleIndex);
       setState(() {
-        isLoading = true;
+        allPlants.addAll(newPlants);
+        currentPage++;
       });
-      try {
-        List<PlantClass> newPlants =
-            await Api.futureData(page: currentPage, index: _toogleIndex);
-        setState(() {
-          allPlants.addAll(newPlants);
-          currentPage++;
-          isLoading = false;
-        });
-      } catch (e) {
-        // Handle the error (e.g., show an error message)
-        debugPrint('Error loading more data: $e');
-        setState(() {
-          isLoading = false;
-        });
-      }
+    } catch (e) {
+      // Handle the error (e.g., show an error message)
+      debugPrint('Error loading more data: $e');
+      setState(() {
+        noMoreData = true;
+      });
     }
   }
 }

@@ -40,6 +40,7 @@ class _SignButtonState extends State<SignButton> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: scheme.primary,
                   foregroundColor: scheme.onPrimary,
+                  disabledBackgroundColor: Colors.transparent,
                   textStyle: textTheme.bodyLarge,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
@@ -48,7 +49,7 @@ class _SignButtonState extends State<SignButton> {
                 child: _isLoading
                     ? CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          scheme.onPrimary,
+                          scheme.primary,
                         ),
                       )
                     : Text(

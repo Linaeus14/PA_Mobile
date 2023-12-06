@@ -42,12 +42,16 @@ class PlantTile extends StatelessWidget {
               )
             ],
           ),
-          trailing: IconButton(
-              icon: Icon(
-                isOn ? CupertinoIcons.heart_fill : CupertinoIcons.heart_solid,
-                color: isOn ? Colors.red : null,
-              ),
-              onPressed: () => onPressed)),
+          trailing: Provider.of<UserData>(context).id == null
+              ? null
+              : IconButton(
+                  icon: Icon(
+                    isOn
+                        ? CupertinoIcons.heart_fill
+                        : CupertinoIcons.heart_solid,
+                    color: isOn ? Colors.red : null,
+                  ),
+                  onPressed: () => onPressed)),
     );
   }
 

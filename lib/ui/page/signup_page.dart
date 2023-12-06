@@ -82,6 +82,7 @@ class _SignUpState extends State<SignUp> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
                                       controller: _ctrlName,
+                                      keyboardType: TextInputType.text,
                                       validator: (value) {
                                         _validate(value, 0);
                                         return null;
@@ -98,6 +99,7 @@ class _SignUpState extends State<SignUp> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
                                       controller: _ctrlEmail,
+                                      keyboardType: TextInputType.emailAddress,
                                       validator: (value) {
                                         _validate(value, 1);
                                         return null;
@@ -114,6 +116,7 @@ class _SignUpState extends State<SignUp> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: TextFormField(
                                       controller: _ctrlPassword,
+                                      keyboardType: TextInputType.visiblePassword,
                                       obscureText: _isPasswordHidden,
                                       validator: (value) {
                                         _validate(value, 2);

@@ -15,9 +15,11 @@ class FavoritePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SearchField(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchField(
+                onSubmitted: (value) {},
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),

@@ -1,7 +1,7 @@
 part of './page.dart';
 
 class DetailPage extends StatelessWidget {
-  DetailPage({super.key});
+  const DetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class DetailPage extends StatelessWidget {
                 height: 200,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/logo.png"),
+                  image: AssetImage("logo.png"),
                   fit: BoxFit.cover,
                 )),
               ),

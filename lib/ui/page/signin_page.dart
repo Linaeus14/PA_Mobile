@@ -74,6 +74,7 @@ class _SignInState extends State<SignIn> {
                             children: [
                               TextFormField(
                                 controller: _ctrlEmail,
+                                keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
                                   _validate(value, 0);
                                   return null;
@@ -95,6 +96,7 @@ class _SignInState extends State<SignIn> {
                             children: [
                               TextFormField(
                                 controller: _ctrlPassword,
+                                keyboardType: TextInputType.visiblePassword,
                                 obscureText: _isPasswordHidden,
                                 validator: (value) {
                                   _validate(value, 1);
