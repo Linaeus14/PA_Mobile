@@ -66,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AboutUs()),
+                        MaterialPageRoute(builder: (context) => const AboutUs()),
                       );
                     },
                   ),

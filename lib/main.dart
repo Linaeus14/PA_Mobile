@@ -176,7 +176,7 @@ class ThemeModeData {
           color: colorSchemeLight.onBackground),
       titleMedium: TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.normal,
+          fontWeight: FontWeight.w600,
           fontStyle: FontStyle.normal,
           letterSpacing: 0.15,
           fontFamily: 'Roboto',
@@ -204,7 +204,7 @@ class ThemeModeData {
           color: colorSchemeLight.onBackground),
       bodySmall: TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.normal,
           fontStyle: FontStyle.normal,
           letterSpacing: 0.4,
           fontFamily: 'Roboto',

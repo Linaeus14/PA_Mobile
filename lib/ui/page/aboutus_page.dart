@@ -2,178 +2,198 @@ part of './page.dart';
 
 // ignore: must_be_immutable
 class AboutUs extends StatelessWidget {
-  AboutUs({super.key});
-
-  List<Map<String, String>> teamData = [
-    {
-      'name': 'Reihan Al Sya\'Ban',
-      'nim': '2109106051',
-      'imagePath': 'assets/saban.png',
-    },
-    {
-      'name': 'Tito Darmawan',
-      'nim': '2109106042',
-      'imagePath': 'assets/tito.png',
-    },
-    {
-      'name': 'Muhammad Firdaus',
-      'nim': '2109106052',
-      'imagePath': 'assets/daus.png',
-    },
-  ];
+  const AboutUs({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, String>> teamData = [
+      {
+        'name': 'Reihan Al Sya\'Ban',
+        'nim': '2109106051',
+        'imagePath': 'saban.png',
+      },
+      {
+        'name': 'Tito Darmawan',
+        'nim': '2109106042',
+        'imagePath': 'tito.png',
+      },
+      {
+        'name': 'Muhammad Firdaus',
+        'nim': '2109106052',
+        'imagePath': 'daus.png',
+      },
+    ];
+    ColorScheme scheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
+    DarkMode darkmode = Provider.of<DarkMode>(context, listen: false);
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.green.withOpacity(0.8),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () {},
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: const Text(
-                      "About Us",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(16),
-                  child: const Icon(Icons.wb_sunny),
-                ),
-              ],
+        appBar: AppBar(
+          backgroundColor: scheme.background,
+          surfaceTintColor: scheme.background,
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'About Us',
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
-            const SizedBox(height: 20),
+          ),
+          actions: [
             Container(
-              width: 200,
-              height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/logo.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Selamat datang di PlantDex",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.green),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Text(
-                "Sebuah perjalanan tanaman yang tak terlupakan!\nKami di PlantDex percaya bahwa kecantikan tumbuhan dan kebahagiaan berasal dari koneksi yang mendalam dengan alam.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Our Teams",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 150,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return _buildTeamCard(
-                    teamData[index]['name']!,
-                    teamData[index]['nim']!,
-                    teamData[index]['imagePath']!,
-                  );
+              padding: const EdgeInsets.all(8.0),
+              margin: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                onPressed: () async {
+                  darkmode.isDark
+                      ? darkmode.changeMode(0)
+                      : darkmode.changeMode(1);
                 },
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Our App",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Text(
-                "PlantDex adalah aplikasi revolusioner yang memadukan kecintaan pada tanaman dengan teknologi canggih, membawa keindahan alam tepat ke ujung jari Anda. Dengan PlantDex, kami membuka pintu menuju eksplorasi tanaman yang penuh keajaiban, membantu Anda merawat setiap tanaman dengan percaya diri, dan memberikan inspirasi untuk menciptakan taman yang benar-benar unik.",
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+                icon: darkmode.isDark
+                    ? const Icon(CupertinoIcons.moon_stars)
+                    : const Icon(CupertinoIcons.sun_dust),
               ),
             ),
           ],
         ),
-      ),
-    ));
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: width,
+                  height: height / 4,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("logo.png"),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Selamat datang di PlantDex",
+                        textAlign: TextAlign.center,
+                        style: textTheme.titleLarge,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          "Sebuah perjalanan tanaman yang tak terlupakan! Kami di PlantDex percaya bahwa kecantikan tumbuhan dan kebahagiaan berasal dari koneksi yang mendalam dengan alam.",
+                          textAlign: TextAlign.center,
+                          style: textTheme.bodyMedium),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Our Teams",
+                        style: textTheme.titleMedium,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      width: width,
+                      height: height / 4,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return TeamCard(
+                            name: teamData[index]['name']!,
+                            nim: teamData[index]['nim']!,
+                            imagePath: teamData[index]['imagePath']!,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Our App", style: textTheme.titleMedium),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          "PlantDex adalah aplikasi revolusioner yang memadukan kecintaan pada tanaman dengan teknologi canggih, membawa keindahan alam tepat ke ujung jari Anda. Dengan PlantDex, kami membuka pintu menuju eksplorasi tanaman yang penuh keajaiban, membantu Anda merawat setiap tanaman dengan percaya diri, dan memberikan inspirasi untuk menciptakan taman yang benar-benar unik.",
+                          textAlign: TextAlign.justify,
+                          style: textTheme.bodyMedium),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ));
   }
+}
 
-  Widget _buildTeamCard(String name, String nim, String imagePath) {
+class TeamCard extends StatelessWidget {
+  const TeamCard(
+      {super.key,
+      required this.name,
+      required this.nim,
+      required this.imagePath});
+
+  final String name;
+  final String nim;
+  final String imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
-      width: 150,
-      margin: const EdgeInsets.all(8),
+      width: width / 3.9,
+      height: height / 5,
+      margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: scheme.background,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: scheme.primary)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            width: 80,
-            height: 80,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Center(
-              child: Image.asset(
-                imagePath,
-                width: 80,
-                height: 90,
-                fit: BoxFit.cover,
-              ),
-            ),
+            width: width / 6,
+            height: height / 12,
+            margin: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+                color: scheme.surfaceVariant,
+                borderRadius: BorderRadius.circular(30)),
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 Text(
                   name,
-                  style: const TextStyle(color: Colors.white),
+                  style: textTheme.titleSmall,
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   nim,
-                  style: const TextStyle(color: Colors.white),
+                  style: textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
