@@ -58,7 +58,7 @@ class AboutUs extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(32.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -159,7 +159,7 @@ class TeamCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      width: width / 3.9,
+      width: width / 4,
       height: height / 5,
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
@@ -189,11 +189,13 @@ class TeamCard extends StatelessWidget {
                   name,
                   style: textTheme.titleSmall,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
                 ),
                 Text(
                   nim,
                   style: textTheme.bodyMedium,
                   textAlign: TextAlign.center,
+                  maxLines: 1,
                 ),
               ],
             ),
