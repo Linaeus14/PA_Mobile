@@ -14,3 +14,4 @@ part './signin_page.dart';
 part './signup_page.dart';
 part './loading_screen.dart';
 part './profile_page.dart';
+part './aboutus_page.dart';

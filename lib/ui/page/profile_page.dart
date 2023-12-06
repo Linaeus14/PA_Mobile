@@ -63,7 +63,12 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.info,
                     title: "About Us",
                     subtitle: "This is Us :)",
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AboutUs()),
+                      );
+                    },
                   ),
                   userData.id != null
                       ? OptionTile(
