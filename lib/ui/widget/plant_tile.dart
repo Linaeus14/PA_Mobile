@@ -15,43 +15,58 @@ class PlantTile extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return Material(
-      elevation: 5,
-      shadowColor: colorScheme.onBackground,
-      child: ListTile(
-          contentPadding: const EdgeInsets.all(8.0),
-          leading: Container(
-            width: width / 5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                image: DecorationImage(
-                    image: _tryImageUrl(plant.image),
-                    fit: _imageUrlInvalid(plant.image)
-                        ? BoxFit.fitHeight
-                        : BoxFit.cover)),
-          ),
-          title: Text(plant.nama!),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(plant.sNama!.join(", ")),
-              Text(
-                plant.cycle!,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
-          ),
-          trailing: Provider.of<UserData>(context).id == null
-              ? null
-              : IconButton(
-                  icon: Icon(
-                    isOn
-                        ? CupertinoIcons.heart_fill
-                        : CupertinoIcons.heart_solid,
-                    color: isOn ? Colors.red : null,
-                  ),
-                  onPressed: () => onPressed)),
+    return InkWell(
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15.0),
+        ),
+        child: Material(
+          elevation: 5,
+          shadowColor: colorScheme.onBackground,
+          color: colorScheme.background,
+          child: ListTile(
+              onTap: () {},
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(width: 0.01, color: colorScheme.primary),
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
+              contentPadding: const EdgeInsets.all(8.0),
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: Container(
+                  width: width / 5.5,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      image: DecorationImage(
+                          image: _tryImageUrl(plant.image),
+                          fit: _imageUrlInvalid(plant.image)
+                              ? BoxFit.fitHeight
+                              : BoxFit.cover)),
+                ),
+              ),
+              title: Text(plant.nama!),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(plant.sNama!.join(", ")),
+                  Text(
+                    plant.cycle!,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
+              trailing: Provider.of<UserData>(context).id == null
+                  ? null
+                  : IconButton(
+                      icon: Icon(
+                        isOn
+                            ? CupertinoIcons.heart_fill
+                            : CupertinoIcons.heart_solid,
+                        color: isOn ? Colors.red : null,
+                      ),
+                      onPressed: () => onPressed())),
+        ),
+      ),
     );
   }
 
@@ -61,11 +76,11 @@ class PlantTile extends StatelessWidget {
         return NetworkImage("https://images.weserv.nl/?url=$url");
       } catch (e) {
         // In case of an error, return a placeholder image
-        return const AssetImage("null_image.png");
+        return const AssetImage("assets/null_image.png");
       }
     } else {
       // If the URL is null or empty, return a placeholder image
-      return const AssetImage("null_image.png");
+      return const AssetImage("assets/null_image.png");
     }
   }
 

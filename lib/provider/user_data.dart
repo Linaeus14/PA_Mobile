@@ -64,7 +64,7 @@ class UserData extends ChangeNotifier {
     _data = UserClass(
         nama: userData?['nama'],
         email: userData?['email'],
-        favorite: List.from(userData?['favorite']));
+        favorite: List.from(userData?['favorite'] ?? []));
   }
 
   Future<Map<String, dynamic>?> _getDocumentData() async {

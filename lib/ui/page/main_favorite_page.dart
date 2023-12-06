@@ -1,7 +1,22 @@
 part of './page.dart';
 
-class FavoritePage extends StatelessWidget {
+class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
+
+  @override
+  State<FavoritePage> createState() => _FavoritePageState();
+}
+
+class _FavoritePageState extends State<FavoritePage> {
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +33,7 @@ class FavoritePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SearchField(
+                controller: _searchController,
                 onSubmitted: (value) {},
               ),
             ),

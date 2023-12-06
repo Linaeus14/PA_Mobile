@@ -53,19 +53,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             controller: _pageController,
             children: const [
               CreatePage(
-                image: 'plantdex1.png',
+                image: 'assets/plantdex1.png',
                 title: "Learn more about plants",
                 description:
                     "Read others names for plants in our plants list.",
               ),
               CreatePage(
-                image: 'plantdex2.png',
+                image: 'assets/plantdex2.png',
                 title: "Find a plant that you love",
                 description:
                     "Are you a plant lover? See if it's on our list.",
               ),
               CreatePage(
-                image: 'plantdex3.png',
+                image: 'assets/plantdex3.png',
                 title: "Plant a tree, green the Earth",
                 description:
                     "Find almost all types of plants that you like based on life cycles.",

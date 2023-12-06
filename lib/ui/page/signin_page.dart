@@ -41,7 +41,7 @@ class _SignInState extends State<SignIn> {
                     children: [
                       Center(
                           child: Image.asset(
-                        'sign_in.png',
+                        'assets/sign_in.png',
                         fit: BoxFit.contain,
                         width: width / 2,
                         height: height / 4,

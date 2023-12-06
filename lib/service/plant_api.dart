@@ -6,19 +6,22 @@ class Api {
     "sk-TtRm6567394dcee4a3190",
     "sk-Tyvx657085b5ed0713364"
   ];
+  static List<String> headpoints = ["", "&cycle=perennial", "&cycle=annual"];
   static int keyIndex = 0;
 
-  static Future<List<PlantClass>> _get({
-    required int page,
-    int pageSize = 20,
-    required int index,
-  }) async {
+  static Future<List<PlantClass>> _get(
+      {required int page,
+      int pageSize = 20,
+      required int index,
+      bool search = false,
+      String searchKey = ""}) async {
     //open local file
     final shared = Shared();
     await shared.open();
 
     // Check the cache first
-    final String cacheKey = "plantApiCache${index}_${page}_$pageSize";
+    final String cacheKey =
+        "plantApiCache${index}_${page}_${pageSize}_$searchKey";
     final String? cachedData = shared.file.getString(cacheKey);
 
     if (cachedData != null) {
@@ -32,9 +35,14 @@ class Api {
 
     // If not cached, fetch data from the API
     try {
-      List<String> headpoints = ["", "&cycle=perennial", "&cycle=annual"];
-      var api = Uri.parse(
-          "https://perenual.com/api/species-list?key=${keys[keyIndex]}&page=$page&pageSize=$pageSize${headpoints[index]}");
+      Uri api;
+      if (!search) {
+        api = Uri.parse(
+            "https://perenual.com/api/species-list?key=${keys[keyIndex]}&page=$page&pageSize=$pageSize${headpoints[index]}");
+      } else {
+        api = Uri.parse(
+            "https://perenual.com/api/species-list?key=${keys[keyIndex]}&page=$page&pageSize=$pageSize${headpoints[index]}&q=$searchKey");
+      }
 
       var request = http.Request('GET', api);
       final http.StreamedResponse response = await request.send();
@@ -78,5 +86,13 @@ class Api {
   static Future<List<PlantClass>> futureData(
       {required int page, required int index}) async {
     return await _get(page: page, index: index);
+  }
+
+  static Future<List<PlantClass>> searchdata(
+      {required int page,
+      required int index,
+      required String searchKey}) async {
+    return await _get(
+        page: page, index: index, search: true, searchKey: searchKey);
   }
 }

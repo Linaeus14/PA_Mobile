@@ -10,17 +10,17 @@ class AboutUs extends StatelessWidget {
       {
         'name': 'Reihan Al Sya\'Ban',
         'nim': '2109106051',
-        'imagePath': 'saban.png',
+        'imagePath': 'assets/saban.png',
       },
       {
         'name': 'Tito Darmawan',
         'nim': '2109106042',
-        'imagePath': 'tito.png',
+        'imagePath': 'assets/tito.png',
       },
       {
         'name': 'Muhammad Firdaus',
         'nim': '2109106052',
-        'imagePath': 'daus.png',
+        'imagePath': 'assets/daus.png',
       },
     ];
     ColorScheme scheme = Theme.of(context).colorScheme;
@@ -58,7 +58,7 @@ class AboutUs extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(32.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -68,7 +68,7 @@ class AboutUs extends StatelessWidget {
                   height: height / 4,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("logo.png"),
+                      image: AssetImage("assets/logo.png"),
                       fit: BoxFit.contain,
                     ),
                   ),

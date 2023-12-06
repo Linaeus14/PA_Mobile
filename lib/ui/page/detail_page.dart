@@ -35,7 +35,7 @@ class DetailPage extends StatelessWidget {
                 height: 200,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("logo.png"),
+                  image: AssetImage("assets/logo.png"),
                   fit: BoxFit.cover,
                 )),
               ),

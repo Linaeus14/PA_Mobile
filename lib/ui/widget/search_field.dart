@@ -1,22 +1,17 @@
 part of './widget.dart';
 
 class SearchField extends StatefulWidget {
-  const SearchField({super.key, required this.onSubmitted});
+  const SearchField(
+      {super.key, required this.controller, required this.onSubmitted});
 
   final void Function(String)? onSubmitted;
+  final TextEditingController controller;
 
   @override
   State<SearchField> createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
-  final TextEditingController _searchController = TextEditingController();
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     ColorScheme scheme = Theme.of(context).colorScheme;
@@ -27,22 +22,23 @@ class _SearchFieldState extends State<SearchField> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         // Use a Material design search bar
         child: TextField(
-          controller: _searchController,
+          controller: widget.controller,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
               filled: true,
               fillColor: scheme.surfaceVariant,
               hintText: 'Search Plant...',
-              // Add a clear button to the search bar
-              suffixIcon: _searchController.value.text.isEmpty
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium, // Add a clear button to the search bar
+              suffixIcon: widget.controller.value.text.isEmpty
                   ? null
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () =>
-                            setState(() => _searchController.clear()),
-                      ),
+                          icon: const Icon(Icons.clear),
+                          onPressed: () =>
+                              setState(() => widget.controller.clear())),
                     ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -62,7 +58,7 @@ class _SearchFieldState extends State<SearchField> {
                   borderRadius: BorderRadius.circular(20.0),
                   borderSide: BorderSide(
                       color: scheme.primary, style: BorderStyle.solid))),
-          onChanged: (text) => setState(() => _searchController),
+          onChanged: (text) => setState(() => widget.controller),
           onSubmitted: widget.onSubmitted,
         ),
       ),
