@@ -81,7 +81,7 @@ class ProfilePage extends StatelessWidget {
                   userData.id != null
                       ? OptionTile(
                           icon: Icons.logout,
-                          title: "sign Out",
+                          title: "Sign Out",
                           subtitle: "Rest for now",
                           onTap: () async {
                             await Auth().signOut();

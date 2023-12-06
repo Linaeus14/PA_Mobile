@@ -1,20 +1,31 @@
 part of './widget.dart';
 
-class SignButton extends StatelessWidget {
-  const SignButton(
-      {super.key,
-      this.signInButton = true,
-      required this.onPressed,
-      this.hideBottom = false});
+class SignButton extends StatefulWidget {
+  const SignButton({
+    super.key,
+    this.signInButton = true,
+    required this.onPressed,
+    this.hideBottom = false,
+  });
+
   final bool signInButton;
   final bool hideBottom;
   final VoidCallback onPressed;
+
+  @override
+  State<SignButton> createState() => _SignButtonState();
+}
+
+class _SignButtonState extends State<SignButton> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     ColorScheme scheme = Theme.of(context).colorScheme;
     TextTheme textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -25,7 +36,7 @@ class SignButton extends StatelessWidget {
               width: width,
               height: height / 20,
               child: ElevatedButton(
-                onPressed: () => onPressed(),
+                onPressed: _isLoading ? null : () => _handlePressed(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: scheme.primary,
                   foregroundColor: scheme.onPrimary,
@@ -34,13 +45,19 @@ class SignButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: Text(
-                  signInButton ? 'Sign In' : 'Sign Up',
-                ),
+                child: _isLoading
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          scheme.onPrimary,
+                        ),
+                      )
+                    : Text(
+                        widget.signInButton ? 'Sign In' : 'Sign Up',
+                      ),
               ),
             ),
           ),
-          hideBottom
+          widget.hideBottom
               ? const Padding(padding: EdgeInsets.all(8.0))
               : Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -48,12 +65,12 @@ class SignButton extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: signInButton
+                            text: widget.signInButton
                                 ? "Don't have an account? "
                                 : 'Have an Account? ',
                             style: textTheme.bodySmall),
                         TextSpan(
-                          text: signInButton ? 'Sign Up' : 'Sign In',
+                          text: widget.signInButton ? 'Sign Up' : 'Sign In',
                           style: TextStyle(
                             color: scheme.primary,
                             decoration: TextDecoration.underline,
@@ -61,7 +78,7 @@ class SignButton extends StatelessWidget {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.pop(context);
-                              signInButton
+                              widget.signInButton
                                   ? Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -80,5 +97,19 @@ class SignButton extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _handlePressed() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    widget.onPressed();
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

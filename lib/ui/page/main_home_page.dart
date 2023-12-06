@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   int _toogleIndex = 0;
   int currentPage = 1;
   bool isLoading = false;
+  bool limitreached = false;
 
   final ScrollController _scrollController = ScrollController();
 
@@ -53,28 +54,24 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: SearchField(),
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
                 const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Life Cycle"),
+                  child: SearchField(),
                 ),
                 SizedBox(
                   width: width,
-                  height: height / 19,
+                  height: height / 20,
                   child: Center(
                     child: ToggleButtons(
                       color: scheme.primary,
                       borderColor: scheme.primary,
                       borderWidth: 0.5,
                       constraints: BoxConstraints(
-                          minWidth: width / 3.38, minHeight: height / 20),
+                          minWidth: width / 3.5, minHeight: height / 20),
                       borderRadius: BorderRadius.circular(8.0),
                       fillColor: scheme.primary,
                       selectedColor: scheme.background,
@@ -87,88 +84,57 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Plants"),
-                ),
-                FutureBuilder(
-                    future: _loadData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox(
-                          width: width,
-                          height: height / 2,
-                          child: const Center(
-                            child: CircularProgressIndicator(),
+          Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Plants"),
+              ),
+              SizedBox(
+                width: width,
+                height: height / 1.5,
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    currentPage = 1;
+                    allPlants.clear();
+                    await _loadData();
+                  },
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: allPlants.length + 1, // +1 for loading indicator
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == allPlants.length && !limitreached) {
+                        return Center(
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                width / 2 - 40, 8, width / 2 - 40, 8),
+                            child: const CircularProgressIndicator(),
                           ),
                         );
-                      } else if (snapshot.hasError) {
-                        return SizedBox(
-                          width: width,
-                          height: height / 2,
-                          child: Center(
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        );
-                      } else if (allPlants.isEmpty) {
-                        return SizedBox(
-                          width: width,
-                          height: height / 2,
-                          child: const Center(
-                            child: Text('Surpassed API Rate Limit'),
+                      } else if (limitreached) {
+                        return Center(
+                          child: Text(
+                            'API RateLimit Surpassed, try again after 24hours passed',
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         );
                       } else {
-                        return SizedBox(
-                          width: width,
-                          height: height / 2,
-                          child: RefreshIndicator(
-                            onRefresh: () async {
-                              currentPage = 1;
-                              allPlants.clear();
-                              await _loadData();
-                            },
-                            child: ListView.builder(
-                                controller: _scrollController,
-                                itemCount: allPlants.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  if (index == allPlants.length) {
-                                    // Loading indicator
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            width / 2 - 40,
-                                            8,
-                                            width / 2 - 40,
-                                            8),
-                                        child:
-                                            const CircularProgressIndicator(),
-                                      ),
-                                    );
-                                  } else if (index < allPlants.length) {
-                                    PlantClass plant = allPlants[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: PlantTile(
-                                        plant: plant,
-                                        isOn: false,
-                                        onPressed: () {},
-                                      ),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                }),
+                        PlantClass plant = allPlants[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: PlantTile(
+                            plant: plant,
+                            isOn: false,
+                            onPressed: () {},
                           ),
                         );
                       }
-                    }),
-              ],
-            ),
-          )
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -191,6 +157,7 @@ class _HomePageState extends State<HomePage> {
         _selection[i] = (i == index);
       }
       _toogleIndex = index;
+      limitreached = false;
     });
     allPlants.clear();
     currentPage = 1;
@@ -207,6 +174,9 @@ class _HomePageState extends State<HomePage> {
       });
     } catch (e) {
       debugPrint('Error loading data: $e');
+      setState(() {
+        limitreached = true;
+      });
       allPlants.clear();
     }
   }
