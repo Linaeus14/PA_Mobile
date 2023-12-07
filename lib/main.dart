@@ -11,12 +11,16 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //Disable di bawah ini jika ingin pakai selain android
   if (Platform.isAndroid) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
   }
+  //Disable di atas ini jika ingin pakai selain android
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

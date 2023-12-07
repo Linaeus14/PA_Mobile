@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage>
                       onHorizontalDragUpdate: (details) {
                         // Handle the horizontal drag update
                         if (details.primaryDelta != null) {
-                          double sensitivity = 10.0;
+                          double sensitivity = 8.0;
                           if (details.primaryDelta! > sensitivity) {
                             _draggedRight();
                           } else if (details.primaryDelta! < -sensitivity) {
