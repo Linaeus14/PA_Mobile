@@ -89,6 +89,24 @@ class UserData extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteDocument(
+      {String collectionPath = 'users', required String documentId}) async {
+    try {
+      // Reference to the Firestore collection and document
+      CollectionReference collectionReference =
+          FirebaseFirestore.instance.collection(collectionPath);
+      DocumentReference documentReference = collectionReference.doc(documentId);
+
+      // Delete the document
+      await documentReference.delete();
+
+      debugPrint('Document deleted successfully.');
+    } catch (e) {
+      debugPrint('Error deleting document: $e');
+      // Handle the error as needed
+    }
+  }
+
   void disposeVar() {
     _userId = null;
     _data = null;

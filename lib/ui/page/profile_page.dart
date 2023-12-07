@@ -10,6 +10,19 @@ class ProfilePage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     UserData userData = Provider.of<UserData>(context, listen: false);
 
+    void showToast(String text) {
+      ColorScheme scheme = Theme.of(context).colorScheme;
+      Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: scheme.primary,
+        textColor: scheme.onPrimary,
+        fontSize: 14.0,
+      );
+    }
+
     return SizedBox(
       height: height,
       child: Column(
@@ -66,7 +79,8 @@ class ProfilePage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const AboutUs()),
+                        MaterialPageRoute(
+                            builder: (context) => const AboutUs()),
                       );
                     },
                   ),
@@ -75,7 +89,20 @@ class ProfilePage extends StatelessWidget {
                           icon: Icons.delete_forever,
                           title: "Delete Account",
                           subtitle: "Dont Leave Us :(",
-                          onTap: () {},
+                          onTap: () async {
+                            bool deleted = await Auth().deleteAccount(context);
+                            if (deleted) {
+                              showToast("Account Deleted Succesfuly!");
+                              if (!context.mounted) return;
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const MainPage(),
+                                  ));
+                            } else {
+                              showToast("Incorrect Password!");
+                            }
+                          },
                         )
                       : const Center(),
                   userData.id != null

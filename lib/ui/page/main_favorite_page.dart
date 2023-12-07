@@ -34,7 +34,10 @@ class _FavoritePageState extends State<FavoritePage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Plants", style: textTheme.titleMedium,),
+              child: Text(
+                "Plants",
+                style: textTheme.titleMedium,
+              ),
             ),
             SizedBox(
               width: width,
@@ -80,7 +83,13 @@ class _FavoritePageState extends State<FavoritePage> {
                                   child: PlantTile(
                                     plant: plant,
                                     isOn: isFavorite,
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailPage(plant: plant)));
+                                    },
                                     onFavPressed: () async {
                                       if (userData.id != null) {
                                         setState(() {

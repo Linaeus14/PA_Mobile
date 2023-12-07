@@ -206,7 +206,13 @@ class _HomePageState extends State<HomePage> {
                           child: PlantTile(
                             plant: plant,
                             isOn: isFavorite,
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailPage(plant: plant)));
+                            },
                             onFavPressed: () async {
                               if (userData.id != null) {
                                 setState(() {

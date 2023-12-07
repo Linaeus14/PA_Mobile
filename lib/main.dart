@@ -82,8 +82,7 @@ class LaunchApp extends StatelessWidget {
       return const OnboardingScreen();
     } else {
       if (!context.mounted) {
-        return const Scaffold(
-            body: Center(child: Text("LaunchApp Failed")));
+        return const Scaffold(body: Center(child: Text("LaunchApp Failed")));
       }
       return checkAuthenticationState(context);
     }

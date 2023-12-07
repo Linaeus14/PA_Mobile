@@ -9,7 +9,6 @@ class PlantClass {
   String? watering;
   List<String>? sunlight;
   String? image;
-  bool isFavorite = false;
 
   PlantClass.fromJson(Map<String, dynamic> json) {
     id = json['id'];
