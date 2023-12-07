@@ -58,7 +58,7 @@ class AboutUs extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -102,21 +102,20 @@ class AboutUs extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
-                      width: width,
-                      height: height / 4,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return TeamCard(
-                            name: teamData[index]['name']!,
-                            nim: teamData[index]['nim']!,
-                            imagePath: teamData[index]['imagePath']!,
-                          );
-                        },
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(8.0),
+                        width: width,
+                        height: height / 3.5,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: List.generate(
+                              teamData.length,
+                              (index) => TeamCard(
+                                    name: teamData[index]['name']!,
+                                    nim: teamData[index]['nim']!,
+                                    imagePath: teamData[index]['imagePath']!,
+                                  )),
+                        )),
                   ],
                 ),
                 Column(
@@ -134,6 +133,11 @@ class AboutUs extends StatelessWidget {
                     ),
                   ],
                 ),
+                Container(
+                  margin: EdgeInsets.only(top: height / 8),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(" - Made With Perenual Free API -", style: textTheme.bodySmall),
+                )
               ],
             ),
           ),
@@ -159,8 +163,7 @@ class TeamCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      width: width / 3.65,
-      height: height / 5,
+      width: width / 3.8,
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           color: scheme.background,

@@ -42,7 +42,9 @@ class _FavoritePageState extends State<FavoritePage> {
             SizedBox(
               width: width,
               height: height / 1.2,
-              child: FutureBuilder<List<PlantClass>>(
+              child: RefreshIndicator(
+                onRefresh: _refreshData,
+                child: FutureBuilder<List<PlantClass>>(
                   future: Api.favoritesData(userData.data!.favorite),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -108,35 +110,61 @@ class _FavoritePageState extends State<FavoritePage> {
                         },
                       );
                     }
-                  }),
+                  },
+                ),
+              ),
             ),
           ],
         ),
       );
     } else {
       return Scaffold(
-          body: SizedBox(
-        height: height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
+        body: SizedBox(
+          height: height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
                   child: Text(
-                "Sign In to Use This Feature!",
-                style: Theme.of(context).textTheme.headlineSmall,
-              )),
-            ),
-            SignButton(
-              signInButton: true,
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => const SignIn()))),
-              hideBottom: true,
-            ),
-          ],
+                    "Sign In to Use This Feature!",
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+              ),
+              SignButton(
+                signInButton: true,
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => const SignIn()))),
+                hideBottom: true,
+              ),
+            ],
+          ),
         ),
-      ));
+      );
+    }
+  }
+
+  Future<void> _refreshData() async {
+    Shared cache = Shared();
+    await cache.file.remove("favorites");
+    setState(() {
+      allPlants.clear();
+    });
+    await _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      List<PlantClass> plants = await Api.favoritesData(
+          Provider.of<UserData>(context, listen: false).data!.favorite);
+      setState(() {
+        allPlants.addAll(plants);
+      });
+    } catch (e) {
+      debugPrint('Error loading data: $e');
+      // Handle error loading data
     }
   }
 

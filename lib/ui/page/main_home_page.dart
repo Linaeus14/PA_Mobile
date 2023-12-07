@@ -153,15 +153,16 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 width: width,
-                height: isSearching ? height / 1.6 : height / 1.47,
+                height: isSearching ? height / 1.7 : height / 1.52,
                 child: RefreshIndicator(
                   onRefresh: () async {
                     Shared cache = Shared();
                     await cache.file.clear();
                     setState(() {
                       allPlants.clear();
-                      _load();
+                      currentPage = 1;
                     });
+                    _load();
                   },
                   child: ListView.builder(
                     controller: _scrollController,
