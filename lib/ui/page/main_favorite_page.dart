@@ -80,19 +80,22 @@ class _FavoritePageState extends State<FavoritePage> {
                                   child: PlantTile(
                                     plant: plant,
                                     isOn: isFavorite,
-                                    onPressed: () async {
+                                    onTap: () {},
+                                    onFavPressed: () async {
                                       if (userData.id != null) {
                                         setState(() {
                                           userData.data!.favorite
                                               .remove(plant.id.toString());
                                         });
+                                        showToast(
+                                            '${plant.nama!} removed from favorites');
                                         await userData.updateField('favorite',
                                             userData.data!.favorite);
                                       }
                                     },
                                   ),
                                 )
-                              : null;
+                              : const Center();
                         },
                       );
                     }
@@ -126,5 +129,18 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
       ));
     }
+  }
+
+  void showToast(String text) {
+    ColorScheme scheme = Theme.of(context).colorScheme;
+    Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_LONG, // Change to LONG for a longer duration
+      gravity: ToastGravity.CENTER, // Change to CENTER for center positioning
+      timeInSecForIosWeb: 2, // Adjust the duration accordingly
+      backgroundColor: scheme.primary,
+      textColor: scheme.onPrimary,
+      fontSize: 14.0,
+    );
   }
 }

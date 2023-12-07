@@ -113,7 +113,6 @@ class Api {
             debugPrint('API response body is null or empty.');
             throw Exception('GET Retrieve Nothing');
           }
-          debugPrint(body.values.toString());
           PlantClass plantDetail = PlantClass.fromJson(body);
           plantDetails.add(plantDetail);
         } else if (response.statusCode == 429) {

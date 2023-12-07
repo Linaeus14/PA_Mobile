@@ -190,14 +190,16 @@ class _HomePageState extends State<HomePage> {
                           isFavorite = userData.data!.favorite
                               .contains(plant.id.toString());
                         }
-
                         return Padding(
                           padding:
                               const EdgeInsets.fromLTRB(16.0, 2.0, 16.0, 4.0),
                           child: PlantTile(
                             plant: plant,
                             isOn: isFavorite,
-                            onPressed: () async {
+                            onTap: () {
+                              
+                            },
+                            onFavPressed: () async {
                               if (userData.id != null) {
                                 setState(() {
                                   if (!isFavorite) {

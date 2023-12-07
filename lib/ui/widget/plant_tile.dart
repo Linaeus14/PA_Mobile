@@ -3,13 +3,15 @@ part of './widget.dart';
 class PlantTile extends StatelessWidget {
   final PlantClass plant;
   final bool isOn;
-  final VoidCallback onPressed;
+  final VoidCallback onFavPressed;
+  final VoidCallback onTap;
 
   const PlantTile(
       {super.key,
       required this.plant,
       required this.isOn,
-      required this.onPressed});
+      required this.onFavPressed,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class PlantTile extends StatelessWidget {
           shadowColor: colorScheme.onBackground,
           color: colorScheme.background,
           child: ListTile(
-              onTap: () {},
+              onTap: () {
+                onTap();
+              },
               shape: RoundedRectangleBorder(
                   side: BorderSide(width: 0.01, color: colorScheme.primary),
                   borderRadius: const BorderRadius.all(Radius.circular(15))),
@@ -64,7 +68,7 @@ class PlantTile extends StatelessWidget {
                             : CupertinoIcons.heart_solid,
                         color: isOn ? Colors.red : null,
                       ),
-                      onPressed: () => onPressed())),
+                      onPressed: () => onFavPressed())),
         ),
       ),
     );
