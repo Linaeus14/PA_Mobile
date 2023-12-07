@@ -170,7 +170,7 @@ class TeamCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: scheme.primary)),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             width: width / 6,
