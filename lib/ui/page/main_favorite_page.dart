@@ -32,9 +32,9 @@ class _FavoritePageState extends State<FavoritePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Plants"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Plants", style: textTheme.titleMedium,),
             ),
             SizedBox(
               width: width,

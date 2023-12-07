@@ -111,11 +111,18 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(4, 2, 4, 2),
                             padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: scheme.primary, width: 0.01),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(15.0)),
+                                color: scheme.background),
                             child: Text(
                               "Searched : $searchKey",
-                              style: textTheme.bodySmall,
+                              style: textTheme.titleSmall,
                             ),
                           ),
                           IconButton(
@@ -137,9 +144,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Plants"),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Plants",
+                  style: textTheme.titleMedium,
+                ),
               ),
               SizedBox(
                 width: width,
@@ -196,9 +206,7 @@ class _HomePageState extends State<HomePage> {
                           child: PlantTile(
                             plant: plant,
                             isOn: isFavorite,
-                            onTap: () {
-                              
-                            },
+                            onTap: () {},
                             onFavPressed: () async {
                               if (userData.id != null) {
                                 setState(() {

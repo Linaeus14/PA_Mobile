@@ -159,7 +159,7 @@ class TeamCard extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      width: width / 4,
+      width: width / 3.65,
       height: height / 5,
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(

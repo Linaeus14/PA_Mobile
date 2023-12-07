@@ -6,6 +6,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme scheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -25,7 +26,7 @@ class DetailPage extends StatelessWidget {
                   margin: const EdgeInsets.all(24),
                   child: Text(
                     'Plant Name',
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    style: textTheme.headlineLarge,
                   ),
                 ))
               ]),
@@ -51,11 +52,8 @@ class DetailPage extends StatelessWidget {
                       topRight: Radius.circular(30.0)),
                   color: scheme.primary,
                 ),
-                child: Text(
-                  "DESKRIPSI",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium
-                ),
+                child: Text("DESKRIPSI",
+                    textAlign: TextAlign.center, style: textTheme.bodyMedium),
               )
             ],
           ),

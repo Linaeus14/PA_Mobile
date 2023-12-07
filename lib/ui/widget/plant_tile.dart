@@ -17,6 +17,7 @@ class PlantTile extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     return InkWell(
       child: ClipRRect(
         borderRadius: const BorderRadius.all(
@@ -47,14 +48,22 @@ class PlantTile extends StatelessWidget {
                               : BoxFit.cover)),
                 ),
               ),
-              title: Text(plant.nama!),
+              title: Text(
+                plant.nama!,
+                style: textTheme.titleSmall,
+                overflow: TextOverflow.ellipsis,
+              ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(plant.sNama!.join(", ")),
+                  Text(
+                    plant.sNama!.join(", "),
+                    style: textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   Text(
                     plant.cycle!,
-                    maxLines: 3,
+                    style: textTheme.bodySmall,
                     overflow: TextOverflow.ellipsis,
                   )
                 ],
