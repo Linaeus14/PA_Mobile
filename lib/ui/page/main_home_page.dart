@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 width: width,
-                height: height / 1.6,
+                height: isSearching ? height / 1.6 : height / 1.47,
                 child: RefreshIndicator(
                   onRefresh: () async {
                     Shared cache = Shared();
@@ -164,8 +164,7 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     'No More Data.',
-                                    style:
-                                        textTheme.bodySmall,
+                                    style: textTheme.bodySmall,
                                   ),
                                 )
                               : Padding(
@@ -209,6 +208,9 @@ class _HomePageState extends State<HomePage> {
                                         .remove(plant.id.toString());
                                   }
                                 });
+                                Shared cache = Shared();
+                                await cache.open();
+                                cache.file.remove('favorites');
                                 await userData.updateField(
                                     'favorite', userData.data!.favorite);
                               }

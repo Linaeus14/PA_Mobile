@@ -8,43 +8,96 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  List<PlantClass> allPlants = [];
+  List<PlantClass> searchedPlants = [];
+
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void dispose() {
     _scrollController.dispose();
-    _searchController.dispose();
     super.dispose();
   }
-
-  final ScrollController _scrollController = ScrollController();
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    TextTheme textTheme = Theme.of(context).textTheme;
     UserData userData = Provider.of<UserData>(context, listen: false);
     if (userData.id != null) {
       return SizedBox(
         height: height,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchField(
-                controller: _searchController,
-                onSubmitted: (value) {},
-              ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text("Plants"),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
-              child: Container(
-                  width: width,
-                  height: height - 218,
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Placeholder()),
-            )
+            SizedBox(
+              width: width,
+              height: height / 1.2,
+              child: FutureBuilder<List<PlantClass>>(
+                  future: Api.favoritesData(userData.data!.favorite),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              width / 2 - 40, 8, width / 2 - 40, 8),
+                          child: const CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      debugPrint(snapshot.error.toString());
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            snapshot.error.toString(),
+                            style: textTheme.bodySmall,
+                          ),
+                        ),
+                      );
+                    } else {
+                      allPlants = snapshot.data!;
+                      return ListView.builder(
+                        controller: _scrollController,
+                        itemCount: allPlants.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          PlantClass plant = allPlants[index];
+                          bool isFavorite = false;
+                          if (userData.id != null) {
+                            isFavorite = userData.data!.favorite
+                                .contains(plant.id.toString());
+                          }
+                          return isFavorite
+                              ? Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      16.0, 2.0, 16.0, 4.0),
+                                  child: PlantTile(
+                                    plant: plant,
+                                    isOn: isFavorite,
+                                    onPressed: () async {
+                                      if (userData.id != null) {
+                                        setState(() {
+                                          userData.data!.favorite
+                                              .remove(plant.id.toString());
+                                        });
+                                        await userData.updateField('favorite',
+                                            userData.data!.favorite);
+                                      }
+                                    },
+                                  ),
+                                )
+                              : null;
+                        },
+                      );
+                    }
+                  }),
+            ),
           ],
         ),
       );

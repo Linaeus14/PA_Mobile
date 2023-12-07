@@ -21,4 +21,17 @@ class PlantClass {
     sunlight = List<String>.from(json['sunlight'] ?? []);
     image = json['default_image']?['regular_url'];
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'common_name': nama,
+      'scientific_name': sNama,
+      'other_name': sinonim,
+      'cycle': cycle,
+      'watering': watering,
+      'sunlight': sunlight,
+      'default_image': {'regular_url': image},
+    };
+  }
 }
